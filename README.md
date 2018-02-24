@@ -1,4 +1,6 @@
-# Dokusho
+# Dokusho 
+
+[![Build Status](https://travis-ci.org/RawToast/dokusho.svg?branch=master)](https://travis-ci.org/RawToast/dokusho)ggi
 
 A Japanese reading page count calculator, using the same page values as the [Tadoku reading contest](http://readmod.com).
 
