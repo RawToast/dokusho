@@ -12,9 +12,7 @@ type readingData = {
 let str = ReasonReact.stringToElement;
 let component = ReasonReact.reducerComponent("Dokusho");
 let initState: readingData = {
-  entries: [
-    { id: 0, kind: Store.Book, value: 0 }
-  ]
+  entries: []
 };
 
 let newItem: (int, Store.pageType, int) => Store.entry = 
@@ -38,13 +36,15 @@ let make = (_children) => {
         ReasonReact.Update({ entries: addEntry({entries: entries}, newItem(9, Book, int)).entries })
     },
   render: ({state: { entries }, reduce}) => {
-    let numItems = List.length(entries);
+    let pageCount = entries 
+      |> List.map((i: Store.entry) => i.value) 
+      |> List.fold_left((a, b) => a + b, 0);
 
     <div className="app">
       <div className="title"> 
         (str("Dokusho"))
         <Input 
-          onSubmit=(reduce((text) => AddEntry(text,2)))
+          onSubmit=(reduce((text) => AddEntry(text, int_of_string(text))))
           />
       </div>
       <div className="entries">
@@ -57,7 +57,7 @@ let make = (_children) => {
             |> ReasonReact.arrayToElement)
       </div>
       <div className="footer">
-        (str(string_of_int(numItems) ++ " items"))
+        (str(string_of_int(pageCount) ++ " pages"))
       </div>
     </div>
   }
