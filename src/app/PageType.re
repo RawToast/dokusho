@@ -24,6 +24,18 @@ module PageType{
             };
     };
 
+    let findOptType: string => option(Store.pageType) = (str) => {
+        switch str {
+            | "Manga" => Some(Manga)
+            | "News" => Some(News)
+            | "Book" => Some(Book)
+            | "Lyric" => Some(Lyric)
+            | "Net" => Some(Net)
+            | _ => None
+            };
+        };
+        
+
     let pageTypes = [
             {name: "Book", pageType: Book}, 
             {name: "News", pageType: News}, 

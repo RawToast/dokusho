@@ -10,7 +10,7 @@ module Util {
         )##value)
             |> (s) => if (int_of_string(s) == 1) s else "";
 
-    let string_map_partial = (f: char => option(char), s: string) => {
+    let string_map_partial = (f: char => option(char), s) => {
         let buf = Bytes.create(String.length(s));
         let j = ref(0);
         for (i in 0 to String.length(s) - 1) {

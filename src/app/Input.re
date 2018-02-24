@@ -11,7 +11,7 @@ module Input = {
       initialState: () => "",
       reducer: (newText: string, _text) => {
         let filtered = Util.string_map_partial(
-            (c) =>
+            (c: char) =>
               if (c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || 
                     c == '6' || c == '7' || c == '8' || c == '9' || c == '0') {
                 Some(c)
@@ -37,10 +37,10 @@ module Input = {
                 }
             )
             />
-            <select onChange=(reduce((evt) => {
-                let v:string = ((evt |> ReactEventRe.Form.target |> ReactDOMRe.domElementToObj)##target);
-                v;
-                }))>
+            <select>
+            /* onChange=(reduce((evt) => {
+              let v:string = ((evt |> ReactEventRe.Form.target |> ReactDOMRe.domElementToObj)##target);
+              v;})) */
                 (List.map((pt: PageType.content) => 
                     <option key=pt.name value=pt.name>(str(pt.name))</option>, PageType.pageTypes)
                     |> Array.of_list

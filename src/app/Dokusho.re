@@ -1,6 +1,8 @@
 open Input;
 open Store;
 open Entry;
+open PageType;
+open Rationale;
 
 type action = 
   | AddEntry(string, int);
@@ -32,9 +34,13 @@ let make = (_children) => {
   initialState: () => initState,
   reducer: (action, { entries }) => 
     switch action {
-      | AddEntry(_text, int) => 
-        ReasonReact.Update({ entries: addEntry({entries: entries}, newItem(9, Book, int)).entries })
-    },
+      | AddEntry(text, int) => 
+        ReasonReact.Update(
+            PageType.findOptType(text) |>
+            Option.fmap(pt => newItem(1, pt, int)) |>
+            Option.fmap(addEntry({entries: entries})) |>
+            Option.default({entries: entries}));
+        },
   render: ({state: { entries }, reduce}) => {
     let pageCount = entries 
       |> List.map((i: Store.entry) => i.value) 
@@ -44,15 +50,12 @@ let make = (_children) => {
       <div className="title"> 
         (str("Dokusho"))
         <Input 
-          onSubmit=(reduce((text) => AddEntry(text, int_of_string(text))))
+          onSubmit=(reduce((text) => AddEntry("Book", int_of_string(text))))
           />
       </div>
       <div className="entries">
-        (List.map((entry: Store.entry) => 
-          <Entry 
-            key=(string_of_int(entry.id)) 
-            store=entry 
-          />, entries)
+        (entries 
+            |> List.map((entry: Store.entry) => <Entry key=(string_of_int(entry.id)) store=entry />) 
             |> Array.of_list
             |> ReasonReact.arrayToElement)
       </div>
