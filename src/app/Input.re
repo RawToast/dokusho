@@ -5,7 +5,7 @@ module Input = {
     type state = string;
     let str = ReasonReact.stringToElement;
     let component = ReasonReact.reducerComponent("Input");
-    let make = (~onSubmit, _) => {
+    let make = (~onSubmit, ~onChange, _) => {
       ...component,
       initialState: () => "",
       reducer: (newText, _text) => ReasonReact.Update(newText),
@@ -23,7 +23,10 @@ module Input = {
                 }
             )
             />
-            <select>
+            <select onChange=(reduce((evt) => {
+                let v:string = ((evt |> ReactEventRe.Form.target |> ReactDOMRe.domElementToObj)##target);
+                v;
+                }))>
                 (List.map((pt: PageType.content) => 
                     <option key=pt.name value=pt.name>(str(pt.name))</option>, PageType.pageTypes)
                     |> Array.of_list

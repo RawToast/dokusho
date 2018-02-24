@@ -63,7 +63,7 @@ let make = (_children) => {
     <div className="app">
       <div className="title"> 
         (str("Dokusho"))
-        <Input onSubmit=(reduce((text) => AddItem(text))) />
+        <Input onSubmit=(reduce((text) => AddItem(text))) onChange=(reduce((text) => AddItem(text)))/>
       </div>
       <div className="items">
         (List.map((item) => 
