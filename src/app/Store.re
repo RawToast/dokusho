@@ -1,6 +1,6 @@
-module Store {
+type pageType = Manga | News | Book | Lyric | Net;
 
-    type pageType = Manga | News | Book | Lyric | Net;
+module Store {
 
     type entry = {
         kind: pageType,

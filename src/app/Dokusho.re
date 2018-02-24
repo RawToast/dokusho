@@ -1,18 +1,18 @@
 open Input;
 
-  type item = {
-    id: int,
-    title: string,
-    completed: bool
-  };
-  
-  type state = {
-    items: list(item)
-  };
-  
-  type action = 
-    | AddItem(string)
-    | ToggleItem(int);
+type item = {
+  id: int,
+  title: string,
+  completed: bool
+};
+
+type state = {
+  items: list(item)
+};
+
+type action = 
+  | AddItem(string)
+  | ToggleItem(int);
 
 let str = ReasonReact.stringToElement;
 

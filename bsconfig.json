@@ -1,7 +1,15 @@
 {
   "name": "reason-scripts",
   "sources": [
-    "src"
+    {
+      "dir": "src",
+      "subdirs": true
+    },
+    {
+      "dir": "test",
+      "type": "dev",
+      "subdirs": true
+    }
   ],
   "bs-dependencies": [
     "reason-react",
