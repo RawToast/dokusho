@@ -5,7 +5,7 @@ module Input = {
     type state = string;
     let str = ReasonReact.stringToElement;
     let component = ReasonReact.reducerComponent("Input");
-    let make = (~onSubmit, ~onChange, _) => {
+    let make = (~onSubmit,  _) => {
       ...component,
       initialState: () => "",
       reducer: (newText, _text) => ReasonReact.Update(newText),

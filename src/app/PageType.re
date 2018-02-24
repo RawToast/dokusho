@@ -1,3 +1,5 @@
+open Store;
+
 module PageType{
 
     type content = { name: string, pageType: Store.pageType};
@@ -10,6 +12,16 @@ module PageType{
         | Lyric => 0.8
         | Net => 1.0
         };
+    };
+
+    let toString = (pt: Store.pageType) => {
+        switch pt {
+            | Manga => "Manga"
+            | News => "News"
+            | Book => "Book"
+            | Lyric => "Lyric"
+            | Net => "Net"
+            };
     };
 
     let pageTypes = [
