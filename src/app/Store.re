@@ -1,14 +1,11 @@
-type pageType = Manga | News | Book | Lyric | Net;
-
 module Store {
 
+    type pageType = Manga | News | Book | Lyric | Net;
+
     type entry = {
+        id: int,
         kind: pageType,
         value: int
-    };
-
-    type simpleReadingData = {
-        entries: list(entry)
     };
 
     type readingData = {
