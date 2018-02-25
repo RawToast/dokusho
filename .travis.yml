@@ -2,4 +2,4 @@ language: node_js
 node_js:
     - "8"
 cache: yarn
-script: "yarn add coveralls && npm install -g bs-platform && yarn bsb && yarn ci"
+script: ["yarn add coveralls",  "npm install -g bs-platform", "yarn bsb", "yarn ci"]

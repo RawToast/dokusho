@@ -1,4 +1,4 @@
-open Util;
+open DokuUtil;
 open PageType;
 open Types;
 
@@ -14,7 +14,7 @@ module Input = {
       ...component,
       initialState: () => { text: "", selection: selection},
       reducer: (state: inputState, _text) => {
-        let filtered = Util.string_map_partial(
+        let filtered = DokuUtil.string_map_partial(
             (c: char) =>
               if (c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || 
                     c == '6' || c == '7' || c == '8' || c == '9' || c == '0') {
@@ -34,7 +34,7 @@ module Input = {
             pattern="[0-9]*"
             placeholder="Pages"
             onChange=((evt) => {
-              let txt = Util.valueFromEvent(evt);
+              let txt = DokuUtil.valueFromEvent(evt);
               reduce(() => {text: txt, selection: state.selection})()
             })
             onKeyDown=((evt) =>
@@ -46,7 +46,7 @@ module Input = {
             />
             <select
             onChange=((evt) => {
-              let txt = Util.valueFromEvent(evt);
+              let txt = DokuUtil.valueFromEvent(evt);
 
               switch (PageType.findOptType(txt)) {
                 | Some(pt) => 

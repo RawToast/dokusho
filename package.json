@@ -14,7 +14,8 @@
     "test": "react-scripts test --env=jsdom",
     "ci": "react-scripts test --env=jsdom --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "eject": "react-scripts eject",
-    "prepare": "npm link bs-platform"
+    "prepare": "npm link bs-platform",
+    "clean": "rm -rf lib && rm -rf node_modues"
   },
   "devDependencies": {
     "bs-jest": "^0.3.2",
