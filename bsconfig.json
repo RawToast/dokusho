@@ -4,6 +4,9 @@
     {
       "dir": "src",
       "subdirs": true
+    },
+    {
+      "dir": "src/__tests__"
     }
   ],
   "bs-dependencies": [
