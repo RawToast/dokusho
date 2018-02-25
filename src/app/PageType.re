@@ -1,10 +1,7 @@
-open Store;
+open Types;
 
 module PageType{
-
-    type content = { name: string, pageType: Store.pageType};
-
-    let pageScore = (pt: Store.pageType) => { 
+    let pageScore = (pt: pageType) => { 
         switch pt {
         | Manga => 0.2
         | News => 1.0
@@ -14,7 +11,7 @@ module PageType{
         };
     };
 
-    let toString = (pt: Store.pageType) => {
+    let toString = (pt: pageType) => {
         switch pt {
             | Manga => "Manga"
             | News => "News"
@@ -24,7 +21,7 @@ module PageType{
             };
     };
 
-    let findOptType: string => option(Store.pageType) = (str) => {
+    let findOptType: string => option(pageType) = (str) => {
         switch str {
             | "Manga" => Some(Manga)
             | "News" => Some(News)
