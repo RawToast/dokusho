@@ -11,6 +11,9 @@
     "bs-jest",
     "rationale"
   ],
+  "bs-dev-dependencies" : [
+    "bs-jest"
+  ],
   "reason": {
     "react-jsx": 2
   },
