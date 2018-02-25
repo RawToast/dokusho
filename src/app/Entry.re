@@ -1,10 +1,10 @@
-open Store;
+open Types;
 open PageType;
 
 module Entry = {
-  let component = ReasonReact.statelessComponent("Reading");
+  let component = ReasonReact.statelessComponent("Entry");
   
-  let make = (~store: Store.entry, _children) => {
+  let make = (~store: entry, _children) => {
     ...component,
     render: (_) =>
       <div className="entry">
