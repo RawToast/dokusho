@@ -2,8 +2,14 @@
   "name": "dokusho",
   "sources": [
     {
-      "dir": "src",
-      "subdirs": true
+      "dir": "src"
+    },
+    {
+      "dir": "src/app"
+    },
+    {
+      "dir": "src/test",
+      "type": "dev"
     }
   ],
   "bs-dependencies": [
