@@ -47,7 +47,7 @@ module Input = {
             <select
             onChange=((evt) => {
               let txt = Util.valueFromEvent(evt);
-              /* let v:string = ((evt |> ReactEventRe.Form.target |> ReactDOMRe.domElementToObj)##target); */
+
               switch (PageType.findOptType(txt)) {
                 | Some(pt) => 
                   onChangeSelection(pt);

@@ -20,3 +20,13 @@ type day = {
 type otherReadingData = {
     days: day
 };
+
+type mainState = {
+  readingData: readingData,
+
+  selectedEntry: pageType
+};
+
+type action = 
+  | AddEntry(pageType, int)
+  | ChangeSelection(pageType);
