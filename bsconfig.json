@@ -2,14 +2,23 @@
   "name": "dokusho",
   "sources": [
     {
-      "dir": "src",
-      "subdirs": true
+      "dir": "src"
+    },
+    {
+      "dir": "src/app"
+    },
+    {
+      "dir": "src/test",
+      "type": "dev"
     }
   ],
   "bs-dependencies": [
     "reason-react",
     "bs-jest",
     "rationale"
+  ],
+  "bs-dev-dependencies" : [
+    "bs-jest"
   ],
   "reason": {
     "react-jsx": 2

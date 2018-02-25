@@ -1,4 +1,4 @@
-module Util {
+module DokuUtil {
     let valueFromEvent = (evt) : string => ( evt
     |> ReactEventRe.Form.target
     |> ReactDOMRe.domElementToObj
@@ -6,9 +6,8 @@ module Util {
 
     let intFromEvent = (evt) : string => (( evt
         |> ReactEventRe.Form.target
-        |> ReactDOMRe.domElementToObj
-        )##value)
-            |> (s) => if (int_of_string(s) == 1) s else "";
+        |> ReactDOMRe.domElementToObj)##value)
+        |> (s) => if (int_of_string(s) == 1) s else "";
 
     let string_map_partial = (f: char => option(char), s) => {
         let buf = Bytes.create(String.length(s));
