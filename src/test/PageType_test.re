@@ -23,17 +23,30 @@ describe("PageType", () => {
 
 
     describe("PageType.toString", () => {
-      test("Can convert a pageType into a string", () =>
+      test("Can convert Book pageType into a string", () => 
         expect(PageType.toString(Book)) |> toBe("Book"));
+
+      test("Can convert Lyric pageType into a string", () => 
+        expect(PageType.toString(Lyric)) |> toBe("Lyric"));
+
+      test("Can convert Manga pageType into a string", () => 
+        expect(PageType.toString(Manga)) |> toBe("Manga"));
+
+      test("Can convert News pageType into a string", () => 
+        expect(PageType.toString(News)) |> toBe("News"));
+
+      test("Can convert Net pageType into a string", () => 
+        expect(PageType.toString(Net)) |> toBe("Net"));
     });
 
     describe("PageType.findOptType", () => {
 
-      test("Returns `None` when given an invalid string", () =>
+      test("Returns `None` when given an invalid string", () => 
         expect(PageType.findOptType("ABC123")) |> toBe(None));
         
       test("Returns some(pageType) when given valid input", () =>
         expect(PageType.findOptType("News")) |> toEqual(Some(News)));
+        
 
       test("Interacts with toString as expected", () =>
         expect(PageType.findOptType(PageType.toString(Manga))) |> toEqual(Some(Manga)));
