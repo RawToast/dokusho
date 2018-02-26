@@ -37,7 +37,7 @@ module Dokusho {
         </div>
         <div className="entries">
           (readingData.entries 
-              |> List.map((entry: entry) => <Entry key=(string_of_int(entry.id)) store=entry />) 
+              |> List.map((entry: entry) => <Entry key=(string_of_int(entry.id)) entry=entry />) 
               |> Array.of_list
               |> ReasonReact.arrayToElement)
         </div>
