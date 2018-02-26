@@ -1232,6 +1232,12 @@ bs-loader@^1.8.0:
     loader-utils "^1.1.0"
     read-bsconfig "^1.0.1"
 
+bs-react-test-renderer@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/bs-react-test-renderer/-/bs-react-test-renderer-2.0.0.tgz#a2f60f988e348dd83b2acd910bb1348508c9ece9"
+  dependencies:
+    react-test-renderer "^16.2.0"
+
 bser@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/bser/-/bser-1.0.2.tgz#381116970b2a6deea5646dd15dd7278444b56169"
@@ -5860,6 +5866,14 @@ react-dev-utils@^4.2.1:
 react-error-overlay@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-3.0.0.tgz#c2bc8f4d91f1375b3dad6d75265d51cd5eeaf655"
+
+react-test-renderer@^16.2.0:
+  version "16.2.0"
+  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.2.0.tgz#bddf259a6b8fcd8555f012afc8eacc238872a211"
+  dependencies:
+    fbjs "^0.8.16"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
 
 "react@>=15.0.0 || >=16.0.0", react@^16.2.0:
   version "16.2.0"
