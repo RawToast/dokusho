@@ -7,25 +7,26 @@ module Dokusho {
   let component = ReasonReact.reducerComponent("Dokusho");
   let initState = {
     readingData: ReadingData.empty,
-    selectedEntry: Book
+    selectedEntry: Book,
+    currentDay: { date: "", entries: []}
   };
   
   let make = (_children) => {
     ...component,
     initialState: () => initState,
-    reducer: (action, { readingData, selectedEntry }) => 
+    reducer: (action, { readingData, selectedEntry, currentDay }) => 
       switch action {
         | ChangeSelection(pageType) => 
-            ReasonReact.Update({readingData: readingData, selectedEntry: pageType}); 
+            ReasonReact.Update({readingData: readingData, selectedEntry: pageType, currentDay: currentDay}); 
         | AddEntry(pageTypeString, count) => 
             ReasonReact.Update(
                 ReadingData.createEntry(List.length(readingData.entries), pageTypeString, count) |>
                 ReadingData.appendEntry(readingData) |>
-                (rd => {readingData: rd, selectedEntry: selectedEntry}));
+                (rd => {readingData: rd, selectedEntry: selectedEntry, currentDay: currentDay}));
       },
-    render: ({state: { readingData, selectedEntry }, reduce}) => {
-      let pageCount = ReadingData.pageCount(readingData);
-  
+    render: ({state: { readingData, selectedEntry, _ }, reduce}) => {
+      let pageCount = ReadingData.pageCount(readingData);      
+      
       <div className="app">
         <div className="title"> 
           (ReasonReact.stringToElement("Dokusho"))
