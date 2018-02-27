@@ -22,11 +22,9 @@ type otherReadingData = {
 };
 
 type mainState = {
-  readingData: readingData,
+  readingData: day,
 
-  selectedEntry: pageType,
-
-  currentDay: day
+  selectedEntry: pageType
 };
 
 type action = 
