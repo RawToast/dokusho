@@ -8,17 +8,9 @@ type entry = {
     value: int
 };
 
-type readingData = {
-  entries: list(entry)
-};
-
 type day = {
   date: string,
   entries: list(entry)
-};
-
-type otherReadingData = {
-    days: day
 };
 
 type mainState = {

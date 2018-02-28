@@ -1,8 +1,8 @@
 open Jest;
 
-open Entry;
 open Types;
-
+open Entry;
+ 
 describe("Entry", () => {
   open ExpectJs;
 
