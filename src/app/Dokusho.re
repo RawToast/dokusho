@@ -5,14 +5,14 @@ open Day;
 
 module Dokusho {
   let component = ReasonReact.reducerComponent("Dokusho");
-  let initState = {
+  let initState = () => {
     readingData: Day.now(),
     selectedEntry: Book
   };
   
   let make = (_children) => {
     ...component,
-    initialState: () => initState,
+    initialState: () => initState(),
     reducer: (action, { readingData, selectedEntry }) => 
       switch action {
         | ChangeSelection(pageType) => 
