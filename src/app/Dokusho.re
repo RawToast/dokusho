@@ -1,12 +1,12 @@
 open Input;
 open Entry;
 open Types;
-open ReadingData;
+open Day;
 
 module Dokusho {
   let component = ReasonReact.reducerComponent("Dokusho");
   let initState = {
-    readingData: ReadingData.empty,
+    readingData: Day.now(),
     selectedEntry: Book
   };
   
@@ -19,13 +19,13 @@ module Dokusho {
             ReasonReact.Update({readingData: readingData, selectedEntry: pageType}); 
         | AddEntry(pageTypeString, count) => 
             ReasonReact.Update(
-                ReadingData.createEntry(List.length(readingData.entries), pageTypeString, count) |>
-                ReadingData.appendEntry(readingData) |>
+                Day.createEntry(List.length(readingData.entries), pageTypeString, count) |>
+                Day.appendEntry(readingData) |>
                 (rd => {readingData: rd, selectedEntry: selectedEntry}));
       },
-    render: ({state: { readingData, selectedEntry }, reduce}) => {
-      let pageCount = ReadingData.pageCount(readingData);
-  
+    render: ({state: { readingData, selectedEntry}, reduce}) => {
+      let pageCount = Day.pageCount(readingData);      
+      
       <div className="app">
         <div className="title"> 
           (ReasonReact.stringToElement("Dokusho"))

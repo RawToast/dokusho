@@ -1,24 +1,40 @@
 open Jest;
 
-open ReadingData;
+open Day;
 open Types;
 
-describe("ReadingData", () => {
+describe("Day", () => {
   open Expect;
 
-    describe("ReadingData.empty", () => {  
-      test("Is an empty ReadingData object", () =>
-        expect(List.length(ReadingData.empty.entries)) |> toBe(0));
+    describe("Day.empty", () => {  
+      test("Is an empty Day object", () =>
+        expect(List.length(Day.empty.entries)) |> toBe(0));
     });
 
-    describe("ReadingData.createEntry", () => {  
+    describe("Day.now", () => {  
+      test("Creates a Date with no reading entires", () =>
+        expect(List.length(Day.now().entries)) |> toBe(0));
+
+      test("Sets the date field", () =>
+        expect(String.length(Day.now().date)) |> toBeGreaterThan(0));
+        
+      test("Sets the date field with a parsable date", () => {
+        let testDate = Day.now().date;
+
+        let otherDate = Js.Date.parse(testDate) |> Js.Date.toISOString;
+
+        expect(testDate) |> toEqual(otherDate)
+        });
+      });
+
+    describe("Day.createEntry", () => {  
       test("Can create an entry type", () =>
-        expect(ReadingData.createEntry(1, Lyric, 1)) |> toEqual({id: 1, kind: Lyric, value: 1}));
+        expect(Day.createEntry(1, Lyric, 1)) |> toEqual({id: 1, kind: Lyric, value: 1}));
     });
 
-    describe("ReadingData.pageCount", () => {  
+    describe("Day.pageCount", () => {  
       test("Counts all pages types to give a weighted total", () =>
-        expect(ReadingData.pageCount({ entries: [
+        expect(Day.pageCount({ date: "", entries: [
           {id: 1, kind: Book, value: 1},
           {id: 2, kind: Lyric, value: 1},
           {id: 3, kind: Manga, value: 1},
@@ -26,7 +42,7 @@ describe("ReadingData", () => {
           {id: 5, kind: News, value: 1},]})) |> toBeLessThan(5.));
 
       test("Returns 0 for an empty list of entries", () =>
-        expect(ReadingData.pageCount(ReadingData.empty)) |> toBe(0.));
+        expect(Day.pageCount(Day.empty)) |> toBe(0.));
     });
 
 });
