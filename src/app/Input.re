@@ -1,5 +1,4 @@
 open DokuUtil;
-open PageType;
 open Types;
 
 module Input = {
@@ -8,20 +7,16 @@ module Input = {
       selection: pageType
     };
     let str = ReasonReact.stringToElement;
+    let numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
     let component = ReasonReact.reducerComponent("Input");
 
-    let make = (~selection, ~onSubmit, ~onChangeSelection, _) => {
+    let make = (~selection, ~onSubmit, _) => {
       ...component,
       initialState: () => { text: "", selection: selection},
-      reducer: (state: inputState, _text) => {
+      reducer: (state: inputState, _ext) => {
         let filtered = DokuUtil.string_map_partial(
             (c: char) =>
-              if (c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || 
-                    c == '6' || c == '7' || c == '8' || c == '9' || c == '0') {
-                Some(c)
-              } else {
-                None
-              },
+              if (Rationale.RList.contains(c, numbers)) Some(c) else None,
             state.text
           );
         ReasonReact.Update({ text: filtered, selection: state.selection })
@@ -44,24 +39,8 @@ module Input = {
                 }
             )
             />
-            <select
-            onChange=((evt) => {
-              let txt = DokuUtil.valueFromEvent(evt);
-
-              switch (PageType.findOptType(txt)) {
-                | Some(pt) => 
-                  onChangeSelection(pt);
-                  reduce(() => {text: txt, selection: pt})()
-                | None => ()
-              }
-            })
-            >
-                (List.map((pt: content) => 
-                    <option key=pt.name value=pt.name>(str(pt.name))</option>, PageType.pageTypes)
-                    |> Array.of_list
-                    |> ReasonReact.arrayToElement)
-            </select>
         </div>
+        
         }
     };
   };
