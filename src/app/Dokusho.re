@@ -7,7 +7,7 @@ open PageTypeSelection;
 module Dokusho {
   let component = ReasonReact.reducerComponent("Dokusho");
   let initState = () => {
-    readingData: Day.now(),
+    readingData: { days : [Day.now()] },
     selectedEntry: Book
   };
   
@@ -25,7 +25,7 @@ module Dokusho {
                 (rd => {readingData: rd, selectedEntry: selectedEntry}));
       },
     render: (self) => {
-      let pageCount = Day.pageCount(self.state.readingData);      
+      let pageCount = Day.pageCount(List.hd(self.state.readingData.days));      
       
       <div className="app">
         <div className="title"> 
@@ -37,7 +37,7 @@ module Dokusho {
           <PageTypeSelection onChangeSelect=(self.reduce(selected => ChangeSelection(selected))) />
         </div>
         <div className="entries">
-          (self.state.readingData.entries 
+          (List.hd(self.state.readingData.days).entries
               |> List.map((entry: entry) => <Entry key=(string_of_int(entry.id)) entry=entry />) 
               |> Array.of_list
               |> ReasonReact.arrayToElement)
