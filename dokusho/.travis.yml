@@ -1,5 +1,0 @@
-language: node_js
-node_js:
-    - "8"
-cache: yarn
-script: ["yarn add coveralls", "yarn bsb -clean-world -make-world", "yarn ci"]

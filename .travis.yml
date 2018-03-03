@@ -1,0 +1,15 @@
+matrix:
+  include:
+    - language: node_js
+      node_js:
+        - "8"
+      cache: yarn
+      before_script:
+        - cd dokusho
+      script: ["yarn add coveralls", "yarn bsb -clean-world -make-world", "yarn ci"]
+
+    - language: scala
+      scala:
+        - 2.12.4
+      before_script:
+        - cd dokusho-server
