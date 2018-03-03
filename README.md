@@ -1,9 +1,9 @@
 # Dokusho
 
-[![FE Build Status](https://travis-matrix-badges.herokuapp.com/repos/RawToast/dokusho/branches/master/1)](https://travis-ci.org/RawToast/dokusho)
+[![FE Build Status](https://travis-matrix-badges.herokuapp.com/repos/RawToast/dokusho/branches/multi-module/1)](https://travis-ci.org/RawToast/dokusho)
 [![Coverage Status](https://coveralls.io/repos/github/RawToast/dokusho/badge.svg)](https://coveralls.io/github/RawToast/dokusho)
 
-[![BE Build Status](https://travis-matrix-badges.herokuapp.com/repos/RawToast/dokusho/branches/master/2)](https://travis-ci.org/RawToast/dokusho)
+[![BE Build Status](https://travis-matrix-badges.herokuapp.com/repos/RawToast/dokusho/branches/multi-module/2)](https://travis-ci.org/RawToast/dokusho)
 
 A Japanese reading page count calculator, using the same page values as the [Tadoku reading contest](http://readmod.com).
 
