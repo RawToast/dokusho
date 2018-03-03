@@ -9,6 +9,7 @@ module PageTypeSelection = {
 
     let str = ReasonReact.stringToElement;
     let component = ReasonReact.statelessComponent("PageTypeSelection");
+
     let make = (~onChangeSelect, _) => {
       ...component,
       render: (_) => {
@@ -21,11 +22,11 @@ module PageTypeSelection = {
                               | None => ()
                           }
                   })>
-            (PageType.pageTypes |>
+                ((PageType.pageTypes |>
                 List.map((pt: content) => 
                     <option key=pt.name value=pt.name>(str(pt.name))</option>)
                     |> Array.of_list
-                    |> ReasonReact.arrayToElement)
+                    |> ReasonReact.arrayToElement))
             </select>
         }
     };
