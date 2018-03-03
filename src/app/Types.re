@@ -13,8 +13,12 @@ type day = {
   entries: list(entry)
 };
 
+type readingHistory = {
+  days: list(day)
+};
+
 type mainState = {
-  readingData: day,
+  readingData: readingHistory,
 
   selectedEntry: pageType
 };
