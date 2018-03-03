@@ -18,11 +18,16 @@ module Dokusho {
       switch action {
         | ChangeSelection(pageType) => 
             ReasonReact.Update({readingData: readingData, selectedEntry: pageType}); 
-        | AddEntry(pageTypeString, count) => 
-            ReasonReact.Update(
-                Day.createEntry(List.length(readingData.entries), pageTypeString, count) |>
-                Day.appendEntry(readingData) |>
-                (rd => {readingData: rd, selectedEntry: selectedEntry}));
+        | AddEntry(pageTypeString, count) =>  
+            ReasonReact.Update(Day.createEntry(9, pageTypeString, count) 
+              |> Day.appendEntry(Day.now()) 
+              |> (ne) => List.map(d => if(d.date != ne.date) d 
+                  else { 
+                    date: d.date, 
+                    entries: List.rev_append(ne.entries, d.entries)}
+                    , readingData.days)
+              |> (ds) => { days: ds }
+              |> (rd) => { readingData: rd, selectedEntry: selectedEntry });
       },
     render: (self) => {
       let pageCount = Day.pageCount(List.hd(self.state.readingData.days));      

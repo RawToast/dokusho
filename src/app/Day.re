@@ -37,4 +37,7 @@ module Day {
   let pageCount = (rd: day) => rd.entries 
         |> List.map(i => float_of_int(i.value) *. PageType.pageScore(i.kind))
         |> List.fold_left((a, b) => a +. b, 0.);
+
+
+  let entries = (d) => d.entries 
 }
