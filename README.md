@@ -1,13 +1,22 @@
 # Dokusho
 
-[Frontend](https://github.com/RawToast/dokusho/tree/master/dokusho): 
-[![Build Status](https://travis-matrix-badges.herokuapp.com/repos/RawToast/dokusho/branches/master/1)](https://travis-ci.org/RawToast/dokusho)
-[![Coverage Status](https://coveralls.io/repos/github/RawToast/dokusho/badge.svg)](https://coveralls.io/github/RawToast/dokusho)
+| [Dokusho]([FE])      | [Dokusho Server]([BE])    |
+|-----------------------|--------------------|
+| [![Travis][T1]][TR]   | [![Travis][T2]][TR]|
+| [![Coveralls][C1]][CR]|                    |
 
-[Backend](https://github.com/RawToast/dokusho/tree/master/dokusho-server): 
-[![Build Status](https://travis-matrix-badges.herokuapp.com/repos/RawToast/dokusho/branches/master/2)](https://travis-ci.org/RawToast/dokusho)
+[FE]: https://github.com/RawToast/dokusho/tree/master/dokusho
+[BE]: https://github.com/RawToast/dokusho/tree/master/dokusho-server
 
-A Japanese reading page count calculator, using the same page values as the [Tadoku reading contest](http://readmod.com).
+[T1]: https://travis-matrix-badges.herokuapp.com/repos/RawToast/dokusho/branches/master/1
+[T2]: https://travis-matrix-badges.herokuapp.com/repos/RawToast/dokusho/branches/master/2
+[TR]: https://travis-ci.org/RawToast/dokusho
+
+[C1]: https://coveralls.io/repos/github/RawToast/dokusho/badge.svg
+[CR]: https://coveralls.io/github/RawToast/dokusho
+
+
+Japanese reading page count calculator, using similar page values as the [Tadoku reading contest](http://readmod.com).
 
 読書 (dokusho)
 
@@ -30,6 +39,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * [Bs-Jest](https://github.com/glennsl/bs-jest)
 
 * [Scala](http://scala-lang.org)
-* [Finch](https://github.com/finagle/finch)
+* [Finch](https://finagle.github.io/finch/)
+* [Circe](https://circe.github.io/circe/)
 
 
