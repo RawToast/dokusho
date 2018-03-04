@@ -25,6 +25,22 @@ Noun, Suru verb
 
 This is a multi-module project. See the relevent modules for running instructions.
 
+### Building
+
+As this project is built using ReasonML, it requires the bucklescript platform to compile and run. To start the application on a fresh machine run the following commands to start a server at `localhost:3000`:
+
+* `npm install -g bs-platform`
+* `yarn`
+* `yarn start`
+
+### Minikube
+
+[Minikube](https://github.com/kubernetes/minikube) can be used to run a local kubernetes cluster with a Mongo instance. The url can be found using: `minikube service web --url`
+
+* `minikube start --vm-driver <hyperkit, xhyve, virtualbox, etc>`
+* `./kube/build-image.sh`
+* `./kube/run-local.sh`
+
 ## Additional Information
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
@@ -37,3 +53,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * [Scala](http://scala-lang.org)
 * [Finch](https://finagle.github.io/finch/)
 * [Circe](https://circe.github.io/circe/)
+* [Kubernetes](https://kubernetes.io)
+* [Minikube](https://github.com/kubernetes/minikube)
+* [MongoDB](https://www.mongodb.com)

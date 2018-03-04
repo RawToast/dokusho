@@ -1,3 +1,5 @@
-docker build ./ -t node:dokusho
+#!/bin/bash 
 
-docker run -p 80:8080 node:dokusho
+docker build ./ -t dokusho
+
+docker run -p 3000:3000 node:dokusho
