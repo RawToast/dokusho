@@ -16,10 +16,10 @@ resolvers ++= Seq(
 libraryDependencies ++= Seq(
   "org.http4s" %% "http4s-dsl" % HTTP4S_VERSION,
   "org.http4s" %% "http4s-blaze-server" % HTTP4S_VERSION,
-//  "org.http4s" %% "http4s-blaze-client" % HTTP4S_VERSION,
   "org.http4s" %% "http4s-circe" % HTTP4S_VERSION,
 
   "io.circe" %% "circe-generic" % CIRCE_VERSION,
+  "io.circe" %% "circe-generic-extras" % CIRCE_VERSION,
   "io.circe" %% "circe-parser" % CIRCE_VERSION,
 
   "org.mongodb.scala" %% "mongo-scala-driver" % MONGO_VERSION,

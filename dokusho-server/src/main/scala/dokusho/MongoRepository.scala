@@ -1,4 +1,4 @@
-import java.util.UUID
+package dokusho
 
 import cats.effect._
 import io.circe.generic.auto._
@@ -11,27 +11,7 @@ import org.mongodb.scala.{MongoClient, MongoCollection, Observable, model}
 
 import scala.concurrent.ExecutionContext
 
-case class UserReadingHistory(userId: String, readingHistory: ReadingHistory)
-
-case class ReadingHistory(days: Seq[Day])
-
-case class Day(date: String, entries: Seq[Entry])
-
-case class Entry(id: Long, kind: PageType, value: Int)
-
-sealed trait PageType
-
-case object Book extends PageType
-
-case object Lyric extends PageType
-
-case object Manga extends PageType
-
-case object Net extends PageType
-
-case object News extends PageType
-
-class MongoDatastore(connectionString: String, databaseName: String, collectionName: String) {
+class MongoRepository(connectionString: String, databaseName: String, collectionName: String) {
 
   implicit val executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 
@@ -40,8 +20,8 @@ class MongoDatastore(connectionString: String, databaseName: String, collectionN
       .getDatabase(databaseName)
       .getCollection(collectionName)
 
-  def get(id: UUID) = for {
-    document <- getDocument(id)
+  def get(userId: String) = for {
+    document <- getDocument(userId)
     hs <- toUserReadingHistory(document)
   } yield hs
 
@@ -51,7 +31,7 @@ class MongoDatastore(connectionString: String, databaseName: String, collectionN
       .map(_ => g)
 
 
-  private def getDocument(id: UUID): IO[Document] = collection.find(equal("uuid", id.toString)).asIO
+  private def getDocument(id: String): IO[Document] = collection.find(equal("userId", id)).asIO
 
   private def toUserReadingHistory(task: Document): IO[UserReadingHistory] = {
     for {
