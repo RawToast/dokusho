@@ -1,23 +1,30 @@
-import com.twitter.finagle.Http
-import com.twitter.util.Await
+import cats.effect._
+import org.http4s._
+import org.http4s.dsl.io._
+import org.http4s.server.blaze.BlazeBuilder
+import fs2.{Stream, StreamApp}
+import fs2.StreamApp.ExitCode
+import org.http4s.server.ServerBuilder
 
-import io.finch._
-import io.finch.circe._
-import io.finch.syntax._
-import io.circe.generic.auto._
+import scala.concurrent.ExecutionContext.Implicits.global
 
-object Main extends App {
+object Main extends StreamApp[IO] {
 
-  case class Locale(language: String, country: String)
-  case class Time(locale: Locale, time: String)
+  val helloWorldService = HttpService[IO] {
+    case GET -> Root / "hello" / name =>
+      Ok(s"Hello, $name.")
+  }
 
-  def currentTime(l: java.util.Locale): String =
-    java.util.Calendar.getInstance(l).getTime.toString
 
-  val time: Endpoint[Time] =
-    post("time" :: jsonBody[Locale]) { l: Locale =>
-      Ok(Time(l, currentTime(new java.util.Locale(l.language, l.country))))
-    }
+  val builder = BlazeBuilder[IO].bindHttp(8080, "localhost")
+    .mountService(helloWorldService, "/")
+    .start
 
-  Await.ready(Http.server.serve(":8081", time.toService))
+
+  override def stream(args: List[String], requestShutdown: IO[Unit]): Stream[IO, ExitCode] =
+    BlazeBuilder[IO]
+      .bindHttp(8080, "localhost")
+      .mountService(helloWorldService, "/")
+      .withBanner(ServerBuilder.DefaultBanner)
+      .serve
 }
