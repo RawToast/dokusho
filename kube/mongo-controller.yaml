@@ -22,6 +22,17 @@ spec:
             - name: mongo-persistent-storage
               mountPath: /data/db
       volumes:
-        - name: mongo-persistent-storage
-          hostPath:
-            path: /data/pv0001/
+      - name: mongo-persistent-storage
+        persistentVolumeClaim:
+          claimName: mongo-claim
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
