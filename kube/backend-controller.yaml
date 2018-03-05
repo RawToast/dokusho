@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: backend
+  name: backend-controller
+spec:
+  replicas: 2
+  selector:
+    name: backend
+  template:
+    metadata:
+      labels:
+        name: backend
+    spec:
+      containers:
+      - image: dokusho:server
+        name: backend
+        ports:
+        - containerPort: 8080
+          name: backend-server
