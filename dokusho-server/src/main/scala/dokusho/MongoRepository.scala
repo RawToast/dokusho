@@ -30,6 +30,17 @@ class MongoRepository(connectionString: String, databaseName: String, collection
       model.UpdateOptions().upsert(true)).asIO
       .map(_ => g)
 
+  // Slow, inefficient method.
+  def addEntry(userId: String, date: String, entry: Entry) = {
+    for {
+      urh <- get(userId)
+      days = urh.readingHistory.days
+      dayToUpdate = days.find(_.date == userId).getOrElse(Day(date, Seq.empty))
+      updatedDay = dayToUpdate.copy(entries = dayToUpdate.entries :+ entry)
+      _ = urh.copy(read)
+    } yield doc
+  }
+
 
   private def getDocument(id: String): IO[Document] = collection.find(equal("userId", id)).asIO
 
