@@ -13,17 +13,17 @@ class MongoService(mongoRepository: MongoRepository) {
   case class SuccessfulPut(userId: String)
 
   val routes: HttpService[IO] = HttpService[IO] {
-    case GET -> Root / "mongo" / name =>
+    case GET -> Root / "history" / userId =>
       for {
-        userReadingHistory <- mongoRepository.get(name)
-        json: Json = userReadingHistory.asJson
+        userReadingHistory <- mongoRepository.get(userId)
+        json = userReadingHistory.asJson
         response <- Ok(json)
       } yield response
-    case req@PUT -> Root / "mongo" =>
+    case req@PUT -> Root / "history" / userId =>
       implicit val userDecoder: EntityDecoder[IO, UserReadingHistory] = jsonOf[IO, UserReadingHistory]
       for {
-        userReadingHistory <- req.as[UserReadingHistory]
-        storedHistory <- mongoRepository.put(userReadingHistory)
+        userReadingHistory <- req.as[ReadingHistory]
+        storedHistory <- mongoRepository.put(UserReadingHistory(userId, userReadingHistory))
         json: Json = SuccessfulPut(storedHistory.userId).asJson
         response <- Ok(json)
       } yield response
