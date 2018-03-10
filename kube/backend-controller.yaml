@@ -3,7 +3,7 @@ kind: ReplicationController
 metadata:
   labels:
     name: backend
-  name: backend-controller
+  name: backend
 spec:
   replicas: 2
   selector:

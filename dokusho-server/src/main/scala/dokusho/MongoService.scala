@@ -20,7 +20,7 @@ class MongoService(mongoRepository: MongoRepository) {
         response <- Ok(json)
       } yield response
     case req@PUT -> Root / "history" / userId =>
-      implicit val userDecoder: EntityDecoder[IO, UserReadingHistory] = jsonOf[IO, UserReadingHistory]
+      implicit val userDecoder: EntityDecoder[IO, ReadingHistory] = jsonOf[IO, ReadingHistory]
       for {
         userReadingHistory <- req.as[ReadingHistory]
         storedHistory <- mongoRepository.put(UserReadingHistory(userId, userReadingHistory))

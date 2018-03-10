@@ -5,6 +5,7 @@ import io.circe.generic.auto._
 import io.circe.parser._
 import io.circe.syntax._
 import io.circe.{DecodingFailure, Json, ParsingFailure}
+import monocle.macros.GenLens
 import org.bson.Document
 import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.{MongoClient, MongoCollection, Observable, model}
@@ -37,9 +38,22 @@ class MongoRepository(connectionString: String, databaseName: String, collection
       days = urh.readingHistory.days
       dayToUpdate = days.find(_.date == userId).getOrElse(Day(date, Seq.empty))
       updatedDay = dayToUpdate.copy(entries = dayToUpdate.entries :+ entry)
-      _ = urh.copy(read)
+      doc = daysLens.modify(upsertDay(updatedDay))(urh)
     } yield doc
   }
+  val daysLens = GenLens[UserReadingHistory](_.readingHistory.days)
+
+  def upsertDay(day:Day)(days: Seq[Day]): Seq[Day] =
+    if(days.exists(d => d.date == day.date)){
+      days.withFilter(d => d.date == day.date)
+          .map(d => day)
+
+
+
+    } else {
+     days :+ day
+    }
+
 
 
   private def getDocument(id: String): IO[Document] = collection.find(equal("userId", id)).asIO
