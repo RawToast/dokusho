@@ -19,6 +19,12 @@ class MongoService(mongoRepository: MongoRepository) {
         json = userReadingHistory.asJson
         response <- Ok(json)
       } yield response
+    case GET -> Root / "history" / "safe" / userId =>
+        for {
+          userReadingHistory <- mongoRepository.get(userId)
+          json: Option[Json] = userReadingHistory.map(_.asJson)
+          resp <- json.fold(NotFound())(j => Ok(j))
+        } yield resp
     case req@PUT -> Root / "history" / userId =>
       implicit val userDecoder: EntityDecoder[IO, ReadingHistory] = jsonOf[IO, ReadingHistory]
       for {
