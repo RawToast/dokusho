@@ -15,7 +15,7 @@ class MongoService(mongoRepository: MongoRepository) {
   val routes: HttpService[IO] = HttpService[IO] {
     case GET -> Root / "history" / userId =>
       for {
-        userReadingHistory <- mongoRepository.get(userId)
+        userReadingHistory <- mongoRepository.getUnsafe(userId)
         json = userReadingHistory.asJson
         response <- Ok(json)
       } yield response
