@@ -1,7 +1,8 @@
 package dokusho
 
+
 import cats.data.OptionT
-import cats.effect._
+import cats.effect.IO
 import io.circe.generic.auto._
 import io.circe.parser._
 import io.circe.syntax._
@@ -25,18 +26,15 @@ class MongoRepository(connectionString: String, databaseName: String, collection
       .getDatabase(databaseName)
       .getCollection(collectionName)
 
-  def get(userId: String): IO[Option[UserReadingHistory]] = {
-    for {
-      document: Document <- OptionT(getDocumentIoOpt(userId))
-      hs: UserReadingHistory <- toUserReadingHistory(document)
-    } yield hs
-  }.value
+  def get(userId: String): IO[Option[UserReadingHistory]] =
+    OptionT(getDocumentIoOpt(userId))
+      .semiflatMap(toUserReadingHistory)
+      .value
+
 
   def getUnsafe(userId: String): IO[UserReadingHistory] =
-    for {
-      document: Document <- getDocumentIO(userId)
-      hs: UserReadingHistory <- toUserReadingHistory(document)
-    } yield hs
+    getDocumentIO(userId)
+      .flatMap(toUserReadingHistory)
 
   def put(g: UserReadingHistory): IO[UserReadingHistory] =
     collection.replaceOne(equal("uuid", g.userId.toString), Document.parse(g.asJson.spaces2),
@@ -62,7 +60,9 @@ class MongoRepository(connectionString: String, databaseName: String, collection
     }
 
   private def getDocument(id: String): FindObservable[Document] = collection.find(equal("userId", id))
+
   private def getDocumentIO(id: String): IO[Document] = getDocument(id).asIO
+
   private def getDocumentIoOpt(id: String): IO[Option[Document]] = getDocument(id).asIOOpt
 
   private def toUserReadingHistory(task: Document): IO[UserReadingHistory] = {
@@ -84,7 +84,10 @@ class MongoRepository(connectionString: String, databaseName: String, collection
 
   private implicit class IOSyntax[T](obs: Observable[T]) {
     def asIO: IO[T] = IO.fromFuture(IO(obs.head()))
+
     def asIOOpt: IO[Option[T]] = IO.fromFuture(IO(obs.headOption()))
+
     def asSeqIO: IO[Seq[T]] = IO.fromFuture(IO(obs.toFuture()))
   }
+
 }
