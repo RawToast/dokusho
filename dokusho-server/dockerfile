@@ -4,4 +4,4 @@ COPY . .
 
 RUN sbt compile
 
-CMD sbt run
+CMD ["sbt", "run"]

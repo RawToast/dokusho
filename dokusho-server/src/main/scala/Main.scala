@@ -21,7 +21,7 @@ object Main extends StreamApp[IO]  {
 
   override def stream(args: List[String], requestShutdown: IO[Unit]): Stream[IO, ExitCode] =
     BlazeBuilder[IO]
-      .bindHttp(8080, "localhost")
+      .bindHttp(8080, "0.0.0.0")
       .mountService(mongoService.routes, "/")
       .withBanner(ServerBuilder.DefaultBanner)
       .serve
