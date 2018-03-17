@@ -9,5 +9,4 @@ describe("Util", () => {
       test("Can filter a string using a predicate", () =>
         expect(DokuUtil.string_map_partial(s => if(s == 'l') Some(s) else None, "Hello")) |> toBe("ll"));
     });
-
 });

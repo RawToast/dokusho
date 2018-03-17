@@ -20,6 +20,10 @@
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@glennsl/bs-json/-/bs-json-1.1.3.tgz#492e0336777087356968ae4d57515365d6a18b38"
 
+"@glennsl/rebase@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@glennsl/rebase/-/rebase-0.2.0.tgz#dc1d99296dd7f7c47c90b5a4518dd598a71bedfa"
+
 abab@^1.0.3, abab@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -340,13 +344,6 @@ aws-sign2@~0.7.0:
 aws4@^1.2.1, aws4@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
-
-axios@^0.18.0:
-  version "0.18.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
-  dependencies:
-    follow-redirects "^1.3.0"
-    is-buffer "^1.1.5"
 
 axobject-query@^0.1.0:
   version "0.1.0"
@@ -1224,11 +1221,13 @@ browserslist@^2.1.2, browserslist@^2.5.1:
     caniuse-lite "^1.0.30000792"
     electron-to-chromium "^1.3.30"
 
-bs-axios@^0.0.29:
-  version "0.0.29"
-  resolved "https://registry.yarnpkg.com/bs-axios/-/bs-axios-0.0.29.tgz#470501464cf4d98cc7da3835fd0e28982f6e7fbe"
-  dependencies:
-    axios "^0.18.0"
+bs-fetch@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/bs-fetch/-/bs-fetch-0.2.1.tgz#165bed867009f2e91efb959ca1c0ff940d8cd19a"
+
+bs-fetch@reasonml-community/bs-fetch#next:
+  version "0.2.0"
+  resolved "https://codeload.github.com/reasonml-community/bs-fetch/tar.gz/e4d3fb4751ace0f5d64713f9c947fe62790c67c8"
 
 bs-jest@^0.2.0:
   version "0.2.0"
@@ -2738,12 +2737,6 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
-follow-redirects@^1.3.0:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.4.1.tgz#d8120f4518190f55aac65bb6fc7b85fcd666d6aa"
-  dependencies:
-    debug "^3.1.0"
-
 for-in@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-1.0.2.tgz#81068d295a8142ec0ac726c6e2200c30fb6d5e80"
@@ -3578,7 +3571,7 @@ isobject@^2.0.0:
   dependencies:
     isarray "1.0.0"
 
-isomorphic-fetch@^2.1.1:
+isomorphic-fetch@^2.1.1, isomorphic-fetch@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz#611ae1acf14f5e81f729507472819fe9733558a9"
   dependencies:
@@ -6056,6 +6049,13 @@ reduce-function-call@^1.0.1:
   resolved "https://registry.yarnpkg.com/reduce-function-call/-/reduce-function-call-1.0.2.tgz#5a200bf92e0e37751752fe45b0ab330fd4b6be99"
   dependencies:
     balanced-match "^0.4.2"
+
+refetch@glennsl/refetch:
+  version "0.1.0"
+  resolved "https://codeload.github.com/glennsl/refetch/tar.gz/c33aadd461bf32a520c282d3444f2602affe4401"
+  dependencies:
+    "@glennsl/rebase" "^0.2.0"
+    bs-fetch reasonml-community/bs-fetch#next
 
 regenerate@^1.2.1:
   version "1.3.3"

@@ -4,11 +4,13 @@
   "private": true,
   "dependencies": {
     "@glennsl/bs-json": "^1.1.3",
-    "bs-axios": "^0.0.29",
+    "bs-fetch": "^0.2.1",
+    "isomorphic-fetch": "^2.2.1",
     "rationale": "^0.1.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "reason-scripts": "0.8.0"
+    "reason-scripts": "0.8.0",
+    "refetch": "glennsl/refetch"
   },
   "scripts": {
     "start": "react-scripts start",
