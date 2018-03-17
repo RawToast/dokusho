@@ -15,6 +15,8 @@
   "bs-dependencies": [
     "reason-react",
     "bs-jest",
+    "bs-axios",
+    "@glennsl/bs-json",
     "rationale"
   ],
   "bs-dev-dependencies" : [

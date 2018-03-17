@@ -7,7 +7,7 @@ describe("PageTypeSelection", () => {
 
   test("Renders when given an onChangeSelect function", () => {
 
-    let onChangeSelectFunction = (pt) => ();
+    let onChangeSelectFunction = (_pt) => ();
 
     let component = ReactShallowRenderer.renderWithRenderer(
         <PageTypeSelection onChangeSelect=onChangeSelectFunction/>
