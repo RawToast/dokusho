@@ -64,13 +64,18 @@ module Encoders = {
     Json.Encode.(
       object_([
         ("id", int(entry.id)),
-        ("kind", string(switch entry.kind {
-          | Manga => "Manga"
-          | News => "News"
-          | Book => "Book"
-          | Lyric => "Lyric"
-          | Net => "Net"
-          })),
+        (
+          "kind",
+          string(
+            switch entry.kind {
+            | Manga => "Manga"
+            | News => "News"
+            | Book => "Book"
+            | Lyric => "Lyric"
+            | Net => "Net"
+            }
+          )
+        ),
         ("value", int(entry.value))
       ])
     );
@@ -82,7 +87,23 @@ module Encoders = {
       ])
     );
   let encodeReadingHistory = readingHistory =>
+    Json.Encode.(object_([("date", readingHistory.days |> list(encodeDay))]));
+  let endcodeInput = (pageType, value) =>
     Json.Encode.(
-      object_([("date", readingHistory.days |> list(encodeDay))])
+      object_([
+        (
+          "kind",
+          string(
+            switch pageType {
+            | Manga => "Manga"
+            | News => "News"
+            | Book => "Book"
+            | Lyric => "Lyric"
+            | Net => "Net"
+            }
+          )
+        ),
+        ("value", int(value))
+      ])
     );
 };
