@@ -1,6 +1,5 @@
 package dokusho
 
-
 import cats.data.OptionT
 import cats.effect.IO
 import io.circe.generic.auto._

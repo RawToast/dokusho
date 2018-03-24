@@ -27,5 +27,13 @@ class ReadingHistoryEndpoint(readingHistoryService: ReadingHistoryService) {
         json: Json = SuccessfulPut(storedHistory.userId).asJson
         response <- Ok(json)
       } yield response
+    case req@PUT -> Root / "history" / userId / "add" =>
+      implicit val entryDecoder: EntityDecoder[IO, Entry] = jsonOf[IO, Entry]
+      for {
+        entry <- req.as[Entry]
+        storedHistory <- readingHistoryService.addNewEntry(userId, entry )
+        json = storedHistory.map(_.asJson)
+        result <- json.fold(NotFound())(j => Ok(j))
+      } yield result
   }
 }

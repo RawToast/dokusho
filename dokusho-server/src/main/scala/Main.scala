@@ -1,10 +1,9 @@
 import cats.effect._
-import dokusho.{MongoRepository, MongoService}
-import org.http4s.dsl.io._
-import org.http4s.server.blaze.BlazeBuilder
-import fs2.{Stream, StreamApp}
+import dokusho.{MongoRepository, ReadingHistoryEndpoint, ReadingHistoryService}
 import fs2.StreamApp.ExitCode
+import fs2.{Stream, StreamApp}
 import org.http4s.server.ServerBuilder
+import org.http4s.server.blaze.BlazeBuilder
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -16,13 +15,14 @@ object Main extends StreamApp[IO]  {
     "test",
     "dokusho")
 
-  val mongoService = new MongoService(mongo)
+  val readingHistoryService = new ReadingHistoryService(mongo)
+  val historyService = new ReadingHistoryEndpoint(readingHistoryService)
 
 
   override def stream(args: List[String], requestShutdown: IO[Unit]): Stream[IO, ExitCode] =
     BlazeBuilder[IO]
       .bindHttp(8080, "0.0.0.0")
-      .mountService(mongoService.routes, "/")
+      .mountService(historyService.routes, "/")
       .withBanner(ServerBuilder.DefaultBanner)
       .serve
 }
