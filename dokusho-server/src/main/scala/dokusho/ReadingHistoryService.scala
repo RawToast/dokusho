@@ -1,0 +1,5 @@
+package dokusho
+
+class ReadingHistoryService {
+
+}

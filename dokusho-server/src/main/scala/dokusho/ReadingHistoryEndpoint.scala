@@ -8,28 +8,22 @@ import org.http4s._
 import org.http4s.circe._
 import org.http4s.dsl.io.{->, /, GET, Ok, Root, _}
 
-class MongoService(mongoRepository: MongoRepository) {
+class ReadingHistoryEndpoint(readingHistoryService: ReadingHistoryService) {
 
   case class SuccessfulPut(userId: String)
 
   val routes: HttpService[IO] = HttpService[IO] {
     case GET -> Root / "history" / userId =>
-      for {
-        userReadingHistory <- mongoRepository.getUnsafe(userId)
-        json = userReadingHistory.asJson
-        response <- Ok(json)
-      } yield response
-    case GET -> Root / "history" / "safe" / userId =>
         for {
-          userReadingHistory <- mongoRepository.get(userId)
+          userReadingHistory <- readingHistoryService.getReadingHistory(userId)
           json: Option[Json] = userReadingHistory.map(_.asJson)
           resp <- json.fold(NotFound())(j => Ok(j))
         } yield resp
     case req@PUT -> Root / "history" / userId =>
       implicit val userDecoder: EntityDecoder[IO, ReadingHistory] = jsonOf[IO, ReadingHistory]
       for {
-        userReadingHistory <- req.as[ReadingHistory]
-        storedHistory <- mongoRepository.put(UserReadingHistory(userId, userReadingHistory))
+        readingHistory <- req.as[ReadingHistory]
+        storedHistory <- readingHistoryService.upsert(UserReadingHistory(userId, readingHistory))
         json: Json = SuccessfulPut(storedHistory.userId).asJson
         response <- Ok(json)
       } yield response

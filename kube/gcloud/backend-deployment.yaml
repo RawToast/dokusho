@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  selector:
+    matchLabels:
+      name: backend
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: backend
+    spec:
+      containers:
+      - image: gcr.io/dokusho-199010/dokusho-server:latest
+        name: backend
+        ports:
+        - containerPort: 8080
+          name: backend
