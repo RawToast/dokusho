@@ -8,10 +8,13 @@ import monocle.macros.GenLens
 
 class ReadingHistoryService(mongoRepository: MongoRepository) {
 
+  private lazy val daysLens = GenLens[UserReadingHistory](_.readingHistory.days)
+  private lazy val entriesLens = GenLens[Day](_.entries)
+
   def getReadingHistory(userId: String): IO[Option[UserReadingHistory]] =
     mongoRepository.get(userId)
 
-  def addNewEntry(userId: String, entry: Entry): IO[Option[UserReadingHistory]] = {
+  def addNewEntry(userId: String, entry: NewEntry): IO[Option[UserReadingHistory]] = {
     lazy val update = daysLens.modify(updateDay(entry))
     OptionT(getReadingHistory(userId))
       .map(update)
@@ -22,13 +25,20 @@ class ReadingHistoryService(mongoRepository: MongoRepository) {
   def upsert(userReadingHistory: UserReadingHistory): IO[UserReadingHistory] =
     mongoRepository.put(userReadingHistory)
 
-  private lazy val daysLens = GenLens[UserReadingHistory](_.readingHistory.days)
+  private def updateDay(entry: NewEntry)(days: Seq[Day]) = {
+    val currentDay = Day(LocalDate.now().atStartOfDay().toString, Seq.empty)
 
-  private def updateDay(entry: Entry)(days: Seq[Day]) = {
-    val newDay = Day(LocalDate.now().atStartOfDay().toString, Seq.empty)
-    val ndays = if (days.exists(_.date == newDay.date)) days else newDay +: days
+    val daysWithUpdatedDay =
+      if (days.exists(_.date == currentDay.date)) days
+      else currentDay +: days
 
-    ndays.withFilter(_.date == newDay.date)
-      .map(d => d.copy(entries = entry +: d.entries))
+    daysWithUpdatedDay.withFilter(_.date == currentDay.date)
+        .map(addEntry(entry))
   }
+
+  private def addEntry(entry: NewEntry) = entriesLens
+    .modify { es => Entry(getNextId(es), entry.kind, entry.value) +: es}
+
+  private def getNextId(entries: Seq[Entry]) =
+    entries.foldLeft(0l)((currMax, entry) => Math.max(currMax, entry.id))
 }

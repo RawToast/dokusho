@@ -1,5 +1,5 @@
 import cats.effect._
-import dokusho.{MongoRepository, ReadingHistoryEndpoint, ReadingHistoryService}
+import dokusho.{MongoRepository, ReadingHistoryRouter, ReadingHistoryService}
 import fs2.StreamApp.ExitCode
 import fs2.{Stream, StreamApp}
 import org.http4s.server.ServerBuilder
@@ -16,7 +16,7 @@ object Main extends StreamApp[IO]  {
     "dokusho")
 
   val readingHistoryService = new ReadingHistoryService(mongo)
-  val historyService = new ReadingHistoryEndpoint(readingHistoryService)
+  val historyService = new ReadingHistoryRouter(readingHistoryService)
 
 
   override def stream(args: List[String], requestShutdown: IO[Unit]): Stream[IO, ExitCode] =

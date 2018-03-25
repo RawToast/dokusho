@@ -26,13 +26,13 @@ class MongoRepository(connectionString: String, databaseName: String, collection
       .getCollection(collectionName)
 
   def get(userId: String): IO[Option[UserReadingHistory]] =
-    OptionT(getDocumentIoOpt(userId))
+    OptionT(getDocument(userId).asIOOpt)
       .semiflatMap(toUserReadingHistory)
       .value
 
-
   def getUnsafe(userId: String): IO[UserReadingHistory] =
-    getDocumentIO(userId)
+    getDocument(userId)
+      .asIO
       .flatMap(toUserReadingHistory)
 
   def put(g: UserReadingHistory): IO[UserReadingHistory] =
@@ -40,29 +40,7 @@ class MongoRepository(connectionString: String, databaseName: String, collection
       model.UpdateOptions().upsert(true)).asIO
       .map(_ => g)
 
-  def addEntry(userId: String, date: String, entry: Entry): IO[UserReadingHistory] = {
-    for {
-      urh <- getUnsafe(userId)
-      days = urh.readingHistory.days
-      dayToUpdate = days.find(_.date == date).getOrElse(Day(date, Seq.empty))
-      updatedDay = entriesLens.modify(_ :+ entry)(dayToUpdate)
-      doc = daysLens.modify(upsertDay(updatedDay))(urh)
-    } yield doc
-  }
-
-  private def upsertDay(day: Day)(days: Seq[Day]): Seq[Day] =
-    if (days.exists(_.date == day.date)) {
-      days.withFilter(_.date == day.date)
-        .map(_ => day)
-    } else {
-      days :+ day
-    }
-
   private def getDocument(id: String): FindObservable[Document] = collection.find(equal("userId", id))
-
-  private def getDocumentIO(id: String): IO[Document] = getDocument(id).asIO
-
-  private def getDocumentIoOpt(id: String): IO[Option[Document]] = getDocument(id).asIOOpt
 
   private def toUserReadingHistory(task: Document): IO[UserReadingHistory] = {
     for {

@@ -8,7 +8,7 @@ import org.http4s._
 import org.http4s.circe._
 import org.http4s.dsl.io.{->, /, GET, Ok, Root, _}
 
-class ReadingHistoryEndpoint(readingHistoryService: ReadingHistoryService) {
+class ReadingHistoryRouter(readingHistoryService: ReadingHistoryService) {
 
   case class SuccessfulPut(userId: String)
 
@@ -28,9 +28,9 @@ class ReadingHistoryEndpoint(readingHistoryService: ReadingHistoryService) {
         response <- Ok(json)
       } yield response
     case req@POST -> Root / "history" / userId / "add" =>
-      implicit val entryDecoder: EntityDecoder[IO, Entry] = jsonOf[IO, Entry]
+      implicit val entryDecoder: EntityDecoder[IO, NewEntry] = jsonOf[IO, NewEntry]
       for {
-        entry <- req.as[Entry]
+        entry <- req.as[NewEntry]
         storedHistory <- readingHistoryService.addNewEntry(userId, entry )
         json = storedHistory.map(_.asJson)
         result <- json.fold(NotFound())(j => Ok(j))
