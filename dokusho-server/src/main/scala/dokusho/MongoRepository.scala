@@ -44,7 +44,7 @@ class MongoRepository(connectionString: String, databaseName: String, collection
     for {
       urh <- getUnsafe(userId)
       days = urh.readingHistory.days
-      dayToUpdate = days.find(_.date == userId).getOrElse(Day(date, Seq.empty))
+      dayToUpdate = days.find(_.date == date).getOrElse(Day(date, Seq.empty))
       updatedDay = entriesLens.modify(_ :+ entry)(dayToUpdate)
       doc = daysLens.modify(upsertDay(updatedDay))(urh)
     } yield doc
