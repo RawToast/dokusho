@@ -1,6 +1,8 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
+  labels:
+    name: web
   name: web
 spec:
   selector:
@@ -13,8 +15,8 @@ spec:
         name: web
     spec:
       containers:
-      - image: gcr.io/dokusho-199010/dokusho-frontend:latest
+      - image: gcr.io/dokusho-199010/dokusho-web:latest
         name: web
         ports:
         - containerPort: 3000
-          name: web
+          name: web-port

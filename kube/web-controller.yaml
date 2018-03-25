@@ -14,7 +14,7 @@ spec:
         name: web
     spec:
       containers:
-      - image: dokusho:web
+      - image: gcr.io/dokusho-199010/dokusho-frontend:latest
         name: web
         ports:
         - containerPort: 3000
