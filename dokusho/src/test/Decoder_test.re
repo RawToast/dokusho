@@ -2,9 +2,9 @@ open Jest;
 
 open Types;
 
-let entryStr = "{\"id\": 1, \"kind\": \"Book\", \"value\": 1}";
-let dayStr = "{\"date\": \"2018-03-25T00:00\", \"entries\": [" ++ entryStr ++ "]}";
-let historyStr = "{ \"days\": [" ++ dayStr ++ "]}";
+let entryStr = "{\"id\":1,\"kind\":\"Book\",\"value\":1}";
+let dayStr = "{\"date\":\"2018-03-25T00:00\",\"entries\":[" ++ entryStr ++ "]}";
+let historyStr = "{\"days\":[" ++ dayStr ++ "]}";
 
 describe("Decoders", () => {
   open Expect;
