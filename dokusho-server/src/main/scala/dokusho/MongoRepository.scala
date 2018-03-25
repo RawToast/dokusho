@@ -36,7 +36,7 @@ class MongoRepository(connectionString: String, databaseName: String, collection
       .flatMap(toUserReadingHistory)
 
   def put(g: UserReadingHistory): IO[UserReadingHistory] =
-    collection.replaceOne(equal("uuid", g.userId.toString), Document.parse(g.asJson.spaces2),
+    collection.replaceOne(equal("userId", g.userId), Document.parse(g.asJson.spaces2),
       model.UpdateOptions().upsert(true)).asIO
       .map(_ => g)
 
