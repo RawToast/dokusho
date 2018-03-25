@@ -1,3 +1,5 @@
 .vscode
 .idea
 *.iml
+target/
+project/target/

@@ -36,10 +36,8 @@ class ReadingHistoryRouter(readingHistoryService: ReadingHistoryService) {
         result <- json.fold(NotFound())(j => Ok(j))
       } yield result
     case PUT -> Root / "history" / userId / "reset" =>
-      for {
-        storedHistory: UserReadingHistory <- readingHistoryService.reset(userId)
-        json = storedHistory.asJson
-        result <- Ok(json)
-      } yield result
+        readingHistoryService.reset(userId)
+            .map(_.asJson)
+            .flatMap(j => Ok(j))
   }
 }
