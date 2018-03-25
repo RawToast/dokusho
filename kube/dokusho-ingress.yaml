@@ -1,0 +1,11 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dokusho-ingress
+spec:
+  web:
+    serviceName: web
+    servicePort: 3000
+  backend:
+    serviceName: backend
+    servicePort: 8080

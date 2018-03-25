@@ -3,6 +3,7 @@ open Entry;
 open Types;
 open Day;
 open PageTypeSelection;
+open Client;
 
 module Dokusho {
   let component = ReasonReact.reducerComponent("Dokusho");
@@ -18,17 +19,46 @@ module Dokusho {
       switch action {
         | ChangeSelection(pageType) => 
             ReasonReact.Update({readingData: readingData, selectedEntry: pageType}); 
-        | AddEntry(pageTypeString, count) =>  
-            ReasonReact.Update(Day.createEntry(9, pageTypeString, count) 
-              |> Day.appendEntry(Day.now()) 
-              |> (ne) => List.map(d => if(d.date != ne.date) d 
-                  else { 
-                    date: d.date, 
-                    entries: List.rev_append(ne.entries, d.entries)}
-                    , readingData.days)
-              |> (ds) => { days: ds }
-              |> (rd) => { readingData: rd, selectedEntry: selectedEntry });
-      },
+        | AddEntry(pageType, count) =>  
+            ReasonReact.SideEffects(
+              ( self =>
+                Js.Promise.(
+                  Client.newEntry(Types.testUser, pageType, count)
+                  |> then_((serverResponse: Client.serverResponse) => {
+                    self.send(UpdateHistory(serverResponse.readingHistory.days));
+                    resolve(serverResponse);
+                  })) 
+                  |> ignore
+              )
+            );
+        | UpdateHistory(days) => 
+            ReasonReact.Update({readingData: {days: days}, selectedEntry: selectedEntry}); 
+        | LoadUserData(userId) => 
+            ReasonReact.SideEffects(
+              (self =>
+                Js.Promise.(
+                  Client.userHistory(userId)
+                    |> then_((serverResponse: Client.serverResponse) => {
+                      self.send(UpdateHistory(serverResponse.readingHistory.days));
+                      resolve(serverResponse);
+                    }))
+                |> ignore
+              )
+            );
+          },
+    didMount: (_self) => {
+      ReasonReact.SideEffects(
+              (self =>
+                Js.Promise.(
+                  Client.userHistory(Types.testUser)
+                    |> then_((serverResponse: Client.serverResponse) => {
+                      self.send(UpdateHistory(serverResponse.readingHistory.days));
+                      resolve(serverResponse);
+                    }))
+                |> ignore
+              )
+            );
+    },
     render: (self) => {
       let pageCount = Day.pageCount(List.hd(self.state.readingData.days));      
       

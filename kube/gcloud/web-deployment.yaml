@@ -1,21 +1,22 @@
-apiVersion: v1
-kind: ReplicationController
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
   labels:
     name: web
-  name: web-controller
+  name: web
 spec:
-  replicas: 2
   selector:
-    name: web
+    matchLabels:
+      name: web
+  replicas: 1
   template:
     metadata:
       labels:
         name: web
     spec:
       containers:
-      - image: gcr.io/dokusho-199010/dokusho-frontend:latest
+      - image: gcr.io/dokusho-199010/dokusho-web:latest
         name: web
         ports:
         - containerPort: 3000
-          name: http-server
+          name: web-port

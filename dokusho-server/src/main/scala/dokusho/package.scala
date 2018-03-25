@@ -7,7 +7,8 @@ package object dokusho {
   case class Day(date: String, entries: Seq[Entry])
 
   case class Entry(id: Long, kind: PageType, value: Int)
-  case class Testy(id: Long, value: Int)
+
+  case class NewEntry(kind: PageType, value: Int)
 
   sealed trait PageType
 

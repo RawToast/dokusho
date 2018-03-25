@@ -9,5 +9,4 @@ describe("Input", () => {
       test("Is an alias for React", () =>
         expect(Input.str("Hello")) |> toBe(ReasonReact.stringToElement("Hello")));
     });
-
 });

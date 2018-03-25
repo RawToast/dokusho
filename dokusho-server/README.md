@@ -2,7 +2,9 @@
 
 [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/RawToast/dokusho/branches/master/2)](https://travis-ci.org/RawToast/dokusho)
 
-Backend server for Dokusho. This is a work in progress and is not currently being used by the frontend.
+Throwaway backend server for Dokusho. This is a work in progress service for experimenting and empowering frontend development.
+
+Once the frontend reaches a reasonable level of functionality, this backend service will be revisited.
 
 ## Running the backend
 
@@ -10,9 +12,15 @@ Backend server for Dokusho. This is a work in progress and is not currently bein
 
 `sbt run` will compile and start a server listening on `8080` 
 
-### Docker
+### Endpoints
 
-Currently, no docker configuration has been craeted for this module.
+* Fetch the reading history for a user
+  * GET `/user/<userID>`
+* Replace a user's reading history
+  * PUT `user/<userID>` 
+* Add a new entry to the user's reading history
+  * POST  `user/<userID>/add`
+
 
 ## Additional Information
 
