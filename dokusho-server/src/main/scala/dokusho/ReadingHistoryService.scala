@@ -5,6 +5,9 @@ import java.time.LocalDate
 import cats.data.OptionT
 import cats.effect.IO
 import monocle.macros.GenLens
+import org.bson.Document
+import org.mongodb.scala.model
+import org.mongodb.scala.model.Filters.equal
 
 class ReadingHistoryService(mongoRepository: MongoRepository) {
 
@@ -25,6 +28,11 @@ class ReadingHistoryService(mongoRepository: MongoRepository) {
   def upsert(userReadingHistory: UserReadingHistory): IO[UserReadingHistory] =
     mongoRepository.put(userReadingHistory)
 
+  def reset(userId: String): IO[UserReadingHistory] = {
+    val emptyHistory = UserReadingHistory(userId, ReadingHistory(Seq.empty))
+    upsert(emptyHistory)
+  }
+
   private def updateDay(entry: NewEntry)(days: Seq[Day]) = {
     val currentDay = Day(LocalDate.now().atStartOfDay().toString, Seq.empty)
 
@@ -39,6 +47,6 @@ class ReadingHistoryService(mongoRepository: MongoRepository) {
   private def addEntry(entry: NewEntry) = entriesLens
     .modify { es => Entry(getNextId(es), entry.kind, entry.value) +: es}
 
-  private def getNextId(entries: Seq[Entry]) =
-    entries.foldLeft(0l)((currMax, entry) => Math.max(currMax, entry.id))
+  private def getNextId(entries: Seq[Entry]) = 1l +
+    entries.foldLeft(-1l)((currMax, entry) => Math.max(currMax, entry.id))
 }

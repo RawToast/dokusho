@@ -31,9 +31,15 @@ class ReadingHistoryRouter(readingHistoryService: ReadingHistoryService) {
       implicit val entryDecoder: EntityDecoder[IO, NewEntry] = jsonOf[IO, NewEntry]
       for {
         entry <- req.as[NewEntry]
-        storedHistory <- readingHistoryService.addNewEntry(userId, entry )
+        storedHistory <- readingHistoryService.addNewEntry(userId, entry)
         json = storedHistory.map(_.asJson)
         result <- json.fold(NotFound())(j => Ok(j))
+      } yield result
+    case PUT -> Root / "history" / userId / "reset" =>
+      for {
+        storedHistory: UserReadingHistory <- readingHistoryService.reset(userId)
+        json = storedHistory.asJson
+        result <- Ok(json)
       } yield result
   }
 }
