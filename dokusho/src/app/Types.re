@@ -30,11 +30,14 @@ type mainState = {
 
 type action =
   | AddEntry(pageType, int)
-  | ChangeSelection(pageType);
+  | ChangeSelection(pageType)
+  | UpdateHistory(list(day))
+  | LoadUserData(string);
 
 module Decoders = {
-  let parsePageType = json : pageType =>
-    switch (json |> Json.stringify) {
+  let parsePageType = (asString:string) => {
+    Js.Console.log("Got type " ++ asString);
+    switch (asString) {
     | "Manga" => Manga
     | "News" => News
     | "Book" => Book
@@ -42,10 +45,11 @@ module Decoders = {
     | "Net" => Net
     | _ => Book
     };
+  };
   let parseEntry = (json: Js.Json.t) : entry =>
     Json.Decode.{
       id: json |> field("id", int),
-      kind: json |> field("kind", parsePageType),
+      kind: json |> field("kind", string) |> parsePageType,
       value: json |> field("value", int)
     };
   let parseEntriesJson = json => Json.Decode.list(parseEntry, json);
@@ -106,4 +110,13 @@ module Encoders = {
         ("value", int(value))
       ])
     );
+  let endcodeStringInput = (pt, value) =>
+    Json.Encode.(
+      object_([
+        ("kind", string(pt)),
+        ("value", int(value))
+      ])
+    );
 };
+
+let testUser = "fully";
