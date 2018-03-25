@@ -89,11 +89,11 @@ module Encoders = {
     Json.Encode.(
       object_([
         ("date", string(day.date)),
-        ("value", day.entries |> list(encodeEntry))
+        ("entries", day.entries |> list(encodeEntry))
       ])
     );
   let encodeReadingHistory = readingHistory =>
-    Json.Encode.(object_([("date", readingHistory.days |> list(encodeDay))]));
+    Json.Encode.(object_([("days", readingHistory.days |> list(encodeDay))]));
   let endcodeInput = (pageType, value) =>
     Json.Encode.(
       object_([
