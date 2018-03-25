@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       name: mongo
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:

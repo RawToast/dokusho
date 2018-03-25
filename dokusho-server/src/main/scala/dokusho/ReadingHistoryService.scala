@@ -28,7 +28,7 @@ class ReadingHistoryService(mongoRepository: MongoRepository) {
     val newDay = Day(LocalDate.now().atStartOfDay().toString, Seq.empty)
     val ndays = if (days.exists(_.date == newDay.date)) days else newDay +: days
 
-    ndays.withFilter(d => d.date == LocalDate.now().atStartOfDay().toString)
+    ndays.withFilter(_.date == newDay.date)
       .map(d => d.copy(entries = entry +: d.entries))
   }
 }
