@@ -1,3 +1,6 @@
+/* TODO: Remove this for real authentication */
+let testUser = "fully";
+
 type pageType =
   | Manga
   | News
@@ -36,7 +39,6 @@ type action =
 
 module Decoders = {
   let parsePageType = (asString:string) => {
-    Js.Console.log("Got type " ++ asString);
     switch (asString) {
     | "Manga" => Manga
     | "News" => News
@@ -87,11 +89,11 @@ module Encoders = {
     Json.Encode.(
       object_([
         ("date", string(day.date)),
-        ("value", day.entries |> list(encodeEntry))
+        ("entries", day.entries |> list(encodeEntry))
       ])
     );
   let encodeReadingHistory = readingHistory =>
-    Json.Encode.(object_([("date", readingHistory.days |> list(encodeDay))]));
+    Json.Encode.(object_([("days", readingHistory.days |> list(encodeDay))]));
   let endcodeInput = (pageType, value) =>
     Json.Encode.(
       object_([
@@ -118,5 +120,3 @@ module Encoders = {
       ])
     );
 };
-
-let testUser = "fully";
