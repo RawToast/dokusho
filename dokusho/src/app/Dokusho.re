@@ -3,7 +3,7 @@ open Entry;
 open Types;
 open Day;
 open PageTypeSelection;
-open Client;
+open Actions;
 
 module Dokusho {
   let component = ReasonReact.reducerComponent("Dokusho");
@@ -20,44 +20,14 @@ module Dokusho {
         | ChangeSelection(pageType) => 
             ReasonReact.Update({readingData: readingData, selectedEntry: pageType}); 
         | AddEntry(pageType, count) =>  
-            ReasonReact.SideEffects(
-              ( self =>
-                Js.Promise.(
-                  Client.newEntry(Types.testUser, pageType, count)
-                  |> then_((serverResponse: Client.serverResponse) => {
-                    self.send(UpdateHistory(serverResponse.readingHistory.days));
-                    resolve(serverResponse);
-                  })) 
-                  |> ignore
-              )
-            );
+            Actions.addNewEntry(pageType, count);
         | UpdateHistory(days) => 
             ReasonReact.Update({readingData: {days: days}, selectedEntry: selectedEntry}); 
         | LoadUserData(userId) => 
-            ReasonReact.SideEffects(
-              (self =>
-                Js.Promise.(
-                  Client.userHistory(userId)
-                    |> then_((serverResponse: Client.serverResponse) => {
-                      self.send(UpdateHistory(serverResponse.readingHistory.days));
-                      resolve(serverResponse);
-                    }))
-                |> ignore
-              )
-            );
+            Actions.loadUserData(userId);
           },
     didMount: (_self) => {
-      ReasonReact.SideEffects(
-              (self =>
-                Js.Promise.(
-                  Client.userHistory(Types.testUser)
-                    |> then_((serverResponse: Client.serverResponse) => {
-                      self.send(UpdateHistory(serverResponse.readingHistory.days));
-                      resolve(serverResponse);
-                    }))
-                |> ignore
-              )
-            );
+      Actions.loadUserData(testUser);
     },
     render: (self) => {
       let pageCount = Day.pageCount(List.hd(self.state.readingData.days));      
@@ -82,6 +52,5 @@ module Dokusho {
         </div>
       </div>
     }
-  };
-  
+  };  
 }

@@ -2,20 +2,21 @@
 
 open Types;
 
+type serverResponse = {
+  userId: string,
+  readingHistory: readingHistory
+};
+
 module Client = {
-  type serverResponse = {
-    userId: string,
-    readingHistory: readingHistory
-  };
-  let parseResponse = (json: Js.Json.t) : serverResponse =>
+
+  let backendURI = "http://35.189.70.144:8080";
+  let jsonHeader = Fetch.HeadersInit.make({"Content-Type": "application/json"});
+  let parseResponse = (json: Js.Json.t) => {
     Json.Decode.{
       userId: json |> field("userId", string),
       readingHistory: json |> field("readingHistory", Decoders.parseHistory)
     };
-  let backendURI = "http://35.189.70.144:8080";
-  /* let backendURI = "http://localhost:8080"; */
-  let jsonHeader = Fetch.HeadersInit.make({"Content-Type": "application/json"});
-
+  };
   /* Fetches the given user's reading history */
   let userHistory = (userId:string) =>
     Js.Promise.(

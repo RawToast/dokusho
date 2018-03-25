@@ -1,3 +1,6 @@
+/* TODO: Remove this for real authentication */
+let testUser = "fully";
+
 type pageType =
   | Manga
   | News
@@ -36,7 +39,6 @@ type action =
 
 module Decoders = {
   let parsePageType = (asString:string) => {
-    Js.Console.log("Got type " ++ asString);
     switch (asString) {
     | "Manga" => Manga
     | "News" => News
@@ -118,5 +120,3 @@ module Encoders = {
       ])
     );
 };
-
-let testUser = "fully";
