@@ -6,14 +6,20 @@ import io.circe.generic.auto._
 import io.circe.parser._
 import io.circe.syntax._
 import io.circe.{DecodingFailure, Json, ParsingFailure}
-import monocle.macros.GenLens
 import org.bson.Document
 import org.mongodb.scala.model.Filters._
 import org.mongodb.scala.{FindObservable, MongoClient, MongoCollection, Observable, model}
 
 import scala.concurrent.ExecutionContext
 
-class MongoRepository(connectionString: String, databaseName: String, collectionName: String) {
+trait HistoryRepository {
+  def get(userId: String): IO[Option[UserReadingHistory]]
+
+  def put(g: UserReadingHistory): IO[UserReadingHistory]
+}
+
+class MongoRepository(connectionString: String, databaseName: String, collectionName: String)
+  extends HistoryRepository {
 
   implicit val executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 

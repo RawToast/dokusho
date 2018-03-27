@@ -6,7 +6,7 @@ import cats.data.OptionT
 import cats.effect.IO
 import monocle.macros.GenLens
 
-class ReadingHistoryService(mongoRepository: MongoRepository) {
+class ReadingHistoryService(mongoRepository: HistoryRepository) {
 
   private lazy val daysLens = GenLens[UserReadingHistory](_.readingHistory.days)
   private lazy val entriesLens = GenLens[Day](_.entries)
@@ -39,11 +39,12 @@ class ReadingHistoryService(mongoRepository: MongoRepository) {
       else currentDay +: days
 
     daysWithUpdatedDay
-      .map(d => if (d.date == currentDay.date) updateDayWithEntry(d) else d)
+      .map(d => if (d.date == currentDay.date)
+        updateDayWithEntry(d) else d)
   }
 
   private def addEntry(entry: NewEntry) = entriesLens
-    .modify { es => Entry(getNextId(es), entry.kind, entry.value) +: es}
+    .modify { es => Entry(getNextId(es), entry.kind, entry.value) +: es }
 
   private def getNextId(entries: Seq[Entry]) = 1l +
     entries.foldLeft(-1l)((currMax, entry) => Math.max(currMax, entry.id))

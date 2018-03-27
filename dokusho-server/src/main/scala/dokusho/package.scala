@@ -1,4 +1,4 @@
-package object dokusho {
+package object dokusho  {
 
   case class UserReadingHistory(userId: String, readingHistory: ReadingHistory)
 
