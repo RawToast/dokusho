@@ -30,7 +30,7 @@ class ReadingHistoryService(mongoRepository: MongoRepository) {
     upsert(emptyHistory)
   }
 
-  private def updateDay(entry: NewEntry)(days: Seq[Day])= {
+  private def updateDay(entry: NewEntry)(days: Seq[Day]) = {
     val currentDay = Day(LocalDate.now().atStartOfDay().toString, Seq.empty)
 
     val updateDayWithEntry = addEntry(entry)
