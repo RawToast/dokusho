@@ -2,11 +2,11 @@ FROM hseeberger/scala-sbt:8u151-2.12.4-1.1.1
 
 COPY build.sbt ./
 
-COPY project/build.properties ./
+COPY project/build.properties ./project/
 
 RUN sbt update
 
-COPY src ./
+COPY src ./src
 
 RUN sbt clean compile
 

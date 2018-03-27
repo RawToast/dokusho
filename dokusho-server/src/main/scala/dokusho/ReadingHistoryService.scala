@@ -5,9 +5,6 @@ import java.time.LocalDate
 import cats.data.OptionT
 import cats.effect.IO
 import monocle.macros.GenLens
-import org.bson.Document
-import org.mongodb.scala.model
-import org.mongodb.scala.model.Filters.equal
 
 class ReadingHistoryService(mongoRepository: MongoRepository) {
 
@@ -17,8 +14,8 @@ class ReadingHistoryService(mongoRepository: MongoRepository) {
   def getReadingHistory(userId: String): IO[Option[UserReadingHistory]] =
     mongoRepository.get(userId)
 
-  def addNewEntry(userId: String, entry: NewEntry): IO[Option[UserReadingHistory]] = {
-    lazy val update = daysLens.modify(updateDay(entry))
+  def addNewEntry(userId: String, newEntry: NewEntry): IO[Option[UserReadingHistory]] = {
+    lazy val update = daysLens.modify(updateDay(newEntry))
     OptionT(getReadingHistory(userId))
       .map(update)
       .semiflatMap(upsert)
@@ -33,15 +30,16 @@ class ReadingHistoryService(mongoRepository: MongoRepository) {
     upsert(emptyHistory)
   }
 
-  private def updateDay(entry: NewEntry)(days: Seq[Day]) = {
+  private def updateDay(entry: NewEntry)(days: Seq[Day])= {
     val currentDay = Day(LocalDate.now().atStartOfDay().toString, Seq.empty)
 
+    val updateDayWithEntry = addEntry(entry)
     val daysWithUpdatedDay =
       if (days.exists(_.date == currentDay.date)) days
       else currentDay +: days
 
     daysWithUpdatedDay
-      .map(d => if (d.date == currentDay.date) addEntry(entry) else d).seq
+      .map(d => if (d.date == currentDay.date) updateDayWithEntry(d) else d)
   }
 
   private def addEntry(entry: NewEntry) = entriesLens

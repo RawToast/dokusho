@@ -15,9 +15,6 @@ import scala.concurrent.ExecutionContext
 
 class MongoRepository(connectionString: String, databaseName: String, collectionName: String) {
 
-  private lazy val daysLens = GenLens[UserReadingHistory](_.readingHistory.days)
-  private lazy val entriesLens = GenLens[Day](_.entries)
-
   implicit val executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 
   private lazy val collection: MongoCollection[Document] =
