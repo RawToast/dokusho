@@ -40,8 +40,8 @@ class ReadingHistoryService(mongoRepository: MongoRepository) {
       if (days.exists(_.date == currentDay.date)) days
       else currentDay +: days
 
-    daysWithUpdatedDay.withFilter(_.date == currentDay.date)
-        .map(addEntry(entry))
+    daysWithUpdatedDay
+      .map(d => if (d.date == currentDay.date) addEntry(entry) else d).seq
   }
 
   private def addEntry(entry: NewEntry) = entriesLens
