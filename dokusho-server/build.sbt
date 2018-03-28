@@ -28,7 +28,9 @@ libraryDependencies ++= Seq(
   "ch.qos.logback" % "logback-classic" % "1.2.3",
 
   "com.github.julien-truffaut" %%  "monocle-core"  % MONOCLE_VERSION,
-  "com.github.julien-truffaut" %%  "monocle-macro" % MONOCLE_VERSION
+  "com.github.julien-truffaut" %%  "monocle-macro" % MONOCLE_VERSION,
+
+  "org.scalatest" % "scalatest_2.12" % "3.0.5" % Test
 )
 
 scalacOptions ++= Seq("-Ypartial-unification")
