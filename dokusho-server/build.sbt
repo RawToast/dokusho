@@ -30,7 +30,7 @@ libraryDependencies ++= Seq(
   "com.github.julien-truffaut" %%  "monocle-core"  % MONOCLE_VERSION,
   "com.github.julien-truffaut" %%  "monocle-macro" % MONOCLE_VERSION,
 
-  "org.scalatest" % "scalatest_2.12" % "3.0.5" % "test"
+  "org.scalatest" % "scalatest_2.12" % "3.0.5" % Test
 )
 
 scalacOptions ++= Seq("-Ypartial-unification")
