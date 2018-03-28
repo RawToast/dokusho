@@ -15,7 +15,7 @@ class ReadingHistoryServiceSpec extends FreeSpec {
         "should return the user" in {
           val result = readingHistoryService.getReadingHistory("userId").unsafeRunSync()
           assert(result.nonEmpty)
-          assert(result.get.userId == "userId")
+          assert(result.map(_.userId).contains("userId"))
         }
       }
       "when the user does not exist" - {

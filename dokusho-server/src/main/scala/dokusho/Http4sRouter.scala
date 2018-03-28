@@ -1,8 +1,9 @@
 package dokusho
 
 import cats.effect.{IO, Sync}
-import io.circe.{Decoder, Encoder, JsonObject, ObjectEncoder}
 import io.circe.generic.AutoDerivation
+import io.circe._
+import org.http4s.EntityDecoder
 import org.http4s.circe.CirceInstances
 import org.http4s.dsl.Http4sDsl
 
@@ -10,9 +11,6 @@ import org.http4s.dsl.Http4sDsl
   * Utility trait with common implicits
   */
 trait Http4sRouter extends AutoDerivation with CirceInstances with Http4sDsl[IO] {
-
-  import io.circe.{Json, Printer}
-  import org.http4s.EntityDecoder
 
   override val defaultPrinter: Printer =
     Printer.noSpaces
