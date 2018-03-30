@@ -3,8 +3,6 @@
 
 [@bs.module "./registerServiceWorker"] external register_service_worker : unit => unit = "default";
 
-open Dokusho;
-
-ReactDOMRe.renderToElementWithId(<Dokusho />, "root");
+ReactDOMRe.renderToElementWithId(<App />, "root");
 
 register_service_worker();
