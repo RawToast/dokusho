@@ -35,6 +35,8 @@ module Dokusho {
           <div>
             <div className="title"> 
               (ReasonReact.stringToElement("Dokusho"))
+            </div> 
+            <div className="dokusho">
               <Input 
                 selection=self.state.selectedEntry
                 onSubmit=(self.reduce((text) => AddEntry(self.state.selectedEntry, int_of_string(text))))
@@ -42,11 +44,11 @@ module Dokusho {
               <PageTypeSelection onChangeSelect=(self.reduce(selected => ChangeSelection(selected))) />
             
               <DateSelector today="" />  
-          </div>
 
-            <Entries entries=(List.hd(self.state.readingData.days).entries) />
+              <Entries entries=(List.hd(self.state.readingData.days).entries) />
             
-            <Footer pageCount=(pageCount) />
+              <Footer pageCount=(pageCount) />
+            </div>
           </div>
     }
   };  

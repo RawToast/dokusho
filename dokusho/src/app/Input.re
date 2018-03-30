@@ -22,8 +22,8 @@ module Input = {
         ReasonReact.Update({ text: filtered, selection: state.selection })
     },
       render: ({state: state, reduce}) => {
-          <div>
-            <ReactToolbox.Input
+        <ReactToolbox.Input
+              className="textinput"
               value=state.text
               _type="text"
               hint=str("Pages")
@@ -37,7 +37,6 @@ module Input = {
                 }
               )
             />
-        </div>
-        }
+         }
     };
   };

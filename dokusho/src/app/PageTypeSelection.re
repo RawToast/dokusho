@@ -16,8 +16,8 @@ module PageTypeSelection = {
     initialState: () => {text: "Book"},
     reducer: (state: inputS, _ext) => ReasonReact.Update({text: state.text}),
     render: ({state, reduce}) =>
-      <div>
         <ReactToolbox.Dropdown
+          className="pageselect"
           auto=true
           source=(Array.of_list(ptArray))
           value=(`String(state.text))
@@ -31,6 +31,5 @@ module PageTypeSelection = {
               }
           )
         />
-      </div>
   };
 };
