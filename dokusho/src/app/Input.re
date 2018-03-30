@@ -23,13 +23,12 @@ module Input = {
     },
       render: ({state: state, reduce}) => {
           <div>
-            <input
+            <ReactToolbox.Input
             value=state.text
             _type="text"
-            pattern="[0-9]*"
-            placeholder="Pages"
-            onChange=((evt) => {
-              let txt = DokuUtil.valueFromEvent(evt);
+            /* pattern="[0-9]*" */
+            hint=str("Pages")
+            onChange=((txt, _mse) => {
               reduce(() => {text: txt, selection: state.selection})()
             })
             onKeyDown=((evt) =>
