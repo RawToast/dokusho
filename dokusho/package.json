@@ -20,9 +20,10 @@
     "eject": "react-scripts eject",
     "prepare": "npm link bs-platform",
     "clean": "rm -rf lib && rm -rf node_modules",
-    "heroku-prebuild": "npm install -g bs-platform"
+    "toolbox": "react-toolbox-themr"
   },
   "devDependencies": {
+    "@astrada/reason-react-toolbox": "^0.4.2",
     "bs-jest": "^0.3.2",
     "bs-react-test-renderer": "^2.0.0",
     "reason-react": "^0.3.2"
