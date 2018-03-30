@@ -43,7 +43,7 @@ module Dokusho {
                 />
               <PageTypeSelection onChangeSelect=(self.reduce(selected => ChangeSelection(selected))) />
             
-              <DateSelector today="" />  
+              <DateSelector onChangeSelect=((a) => ()) />  
 
               <Entries entries=(List.hd(self.state.readingData.days).entries) />
             

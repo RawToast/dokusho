@@ -13,14 +13,13 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "toolbox react-scripts build",
+    "build": "react-toolbox-themr react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "coverage": "react-scripts test --env=jsdom --coverage",
     "ci": "react-scripts test --env=jsdom --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "eject": "react-scripts eject",
     "prepare": "npm link bs-platform",
-    "clean": "rm -rf lib && rm -rf node_modules",
-    "toolbox": "react-toolbox-themr"
+    "clean": "rm -rf lib && rm -rf node_modules"
   },
   "devDependencies": {
     "@astrada/reason-react-toolbox": "^0.4.2",
