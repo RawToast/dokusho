@@ -12,6 +12,8 @@ let make = _children => {
   ...component,
   render: _self =>
     <ReactToolbox.ThemeProvider theme>
-      <Dokusho/>
+      <div className="app">
+        <Dokusho/>
+      </div>
     </ReactToolbox.ThemeProvider>
 };
