@@ -2,29 +2,35 @@ open PageType;
 
 open Types;
 
-open DokuUtil;
-
 module PageTypeSelection = {
-  type inputState = {selection: pageType};
+
+  type inputS = {text: string};
+
   let str = ReasonReact.stringToElement;
-  let component = ReasonReact.statelessComponent("PageTypeSelection");
+  let ptArray = PageType.pageTypes |> List.map(i => {"value": i.name, "label": i.name});
+
+  let component = ReasonReact.reducerComponent("PageTypeSelection");
+
   let make = (~onChangeSelect, _) => {
     ...component,
-    render: (_) =>
-      <select
-        onChange=(
-          evt =>
-            switch (evt |> DokuUtil.valueFromEvent |> PageType.findOptType) {
-            | Some(pt) => onChangeSelect(pt)
-            | None => ()
-            }
-        )>
-        (PageType.pageTypes
-          |> List.map((pt: content) =>
-               <option key=pt.name value=pt.name> (str(pt.name)) </option>)
-          |> Array.of_list
-          |> ReasonReact.arrayToElement
-        )
-      </select>
+    initialState: () => {text: "Book"},
+    reducer: (state: inputS, _ext) => ReasonReact.Update({text: state.text}),
+    render: ({state, reduce}) =>
+      <div>
+        <ReactToolbox.Dropdown
+          auto=true
+          source=(Array.of_list(ptArray))
+          value=(`String(state.text))
+          onChange=(
+            (txt, _mse) =>
+              switch (txt |> PageType.findOptType) {
+              | Some(pt) =>
+                (reduce(() => {text: PageType.toString(pt)}))();
+                onChangeSelect(pt);
+              | None => ()
+              }
+          )
+        />
+      </div>
   };
 };

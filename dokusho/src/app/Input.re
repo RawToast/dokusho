@@ -24,19 +24,18 @@ module Input = {
       render: ({state: state, reduce}) => {
           <div>
             <ReactToolbox.Input
-            value=state.text
-            _type="text"
-            /* pattern="[0-9]*" */
-            hint=str("Pages")
-            onChange=((txt, _mse) => {
-              reduce(() => {text: txt, selection: state.selection})()
-            })
-            onKeyDown=((evt) =>
-                if (ReactEventRe.Keyboard.key(evt) == "Enter") {
-                onSubmit(state.text);
-                (reduce(() => {text: "", selection: state.selection }))()
-                }
-            )
+              value=state.text
+              _type="text"
+              hint=str("Pages")
+              onChange=((txt, _mse) => {
+                reduce(() => {text: txt, selection: state.selection})()
+              })
+              onKeyDown=((evt) =>
+                  if (ReactEventRe.Keyboard.key(evt) == "Enter") {
+                  onSubmit(state.text);
+                  (reduce(() => {text: "", selection: state.selection }))()
+                  }
+              )
             />
         </div>
         
