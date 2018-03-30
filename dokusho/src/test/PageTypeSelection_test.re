@@ -1,7 +1,5 @@
 open Jest;
 
-open PageTypeSelection;
-
 describe("PageTypeSelection", () => {
   open ExpectJs;
 
@@ -13,9 +11,4 @@ describe("PageTypeSelection", () => {
     
     expect(Js.Undefined.return(component)) |> toBeDefined;
   });
-
-  describe("PageTypeSelection.str", () => {  
-    test("Is an alias for ReasonReact.stringToElement", () =>
-      expect(PageTypeSelection.str("Hello")) |> toBe(ReasonReact.stringToElement("Hello")));
-  });  
 });

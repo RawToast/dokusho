@@ -1,10 +1,8 @@
 let component = ReasonReact.reducerComponent("DateSelector");
 
-let getDate = Js.Date.make;
-
 let make = (~onChangeSelect, ~enabledDates, _children) => {
   ...component,
-  initialState: () => getDate(),
+  initialState: () => Js.Date.make(),
   reducer: (state, _ext) => 
     ReasonReact.Update({ state }),
   render: (

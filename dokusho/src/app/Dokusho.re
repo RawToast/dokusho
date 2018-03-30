@@ -1,10 +1,8 @@
 open Input;
 open Types;
 open Day;
-open PageTypeSelection;
 open Actions;
-open Entries;
-open Footer;
+open DokuUtil;
 open Rationale;
 
 module Dokusho {
@@ -35,21 +33,13 @@ module Dokusho {
       Actions.loadUserData(testUser);
     },
     render: (self) => {
-      let calendarDate = Js.Date.fromFloat(Js.Date.utcWithYMDHMS(
-        ~year=Js.Date.getFullYear(self.state.selectedDate),
-        ~month=Js.Date.getMonth(self.state.selectedDate), 
-        ~date=Js.Date.getDate(self.state.selectedDate),
-        ~hours=0.,
-        ~minutes=0.,
-        ~seconds=0.)());
-
-      let dateKey = Js.String.slice(0, 16, Js.Date.toISOString(calendarDate));
-
+      let dateKey = self.state.selectedDate |> DateUtil.dateWithoutTime |> DateUtil.asDateKey;
+      
       let day = RList.find(d => d.date == dateKey, self.state.readingData.days);
       let pageCount = day |> Option.fmap(Day.pageCount) |> Option.default(0.);
-      let ents = day |> Option.fmap(d => d.entries) |> Option.default([]);
+      let entries = day |> Option.fmap(d => d.entries) |> Option.default([]);
 
-      let dats = self.state.readingData.days |> List.map(d => Js.Date.fromString(d.date)) |> (ls) => [Js.Date.make(), ...ls] |> Array.of_list;
+      let availableDates = DateUtil.availableDates(self.state.readingData);
 
           <div>
             <div className="title"> 
@@ -60,11 +50,14 @@ module Dokusho {
                 selection=self.state.selectedEntry
                 onSubmit=(self.reduce((text) => AddEntry(self.state.selectedEntry, int_of_string(text))))
                 />
+
               <PageTypeSelection onChangeSelect=(self.reduce(selected => ChangeSelection(selected))) />
             
-              <DateSelector onChangeSelect=(self.reduce(dt => SelectDate(dt))) enabledDates=(dats) />  
+              <DateSelector 
+                onChangeSelect=(self.reduce(date => SelectDate(date))) 
+                enabledDates=(availableDates) />  
 
-              <Entries entries=(ents) />
+              <Entries entries=(entries) />
             
               <Footer pageCount=(pageCount) />
             </div>
