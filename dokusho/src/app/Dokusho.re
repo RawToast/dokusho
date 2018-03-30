@@ -40,7 +40,9 @@ module Dokusho {
                 onSubmit=(self.reduce((text) => AddEntry(self.state.selectedEntry, int_of_string(text))))
                 />
               <PageTypeSelection onChangeSelect=(self.reduce(selected => ChangeSelection(selected))) />
-            </div>
+            
+              <DateSelector today="" />  
+          </div>
 
             <Entries entries=(List.hd(self.state.readingData.days).entries) />
             

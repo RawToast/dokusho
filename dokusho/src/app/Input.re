@@ -31,14 +31,13 @@ module Input = {
                 reduce(() => {text: txt, selection: state.selection})()
               })
               onKeyDown=((evt) =>
-                  if (ReactEventRe.Keyboard.key(evt) == "Enter") {
+                if (ReactEventRe.Keyboard.key(evt) == "Enter") {
                   onSubmit(state.text);
                   (reduce(() => {text: "", selection: state.selection }))()
-                  }
+                }
               )
             />
         </div>
-        
         }
     };
   };
