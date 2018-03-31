@@ -14,6 +14,8 @@ module Client = {
 
   let backendURI = "http://35.189.70.144:8080";
   let jsonHeader = Fetch.HeadersInit.make({"Content-Type": "application/json"});
+  let authHeader = () => Fetch.HeadersInit.makeWithArray([|( "Content-Type", "application/json" ), ( "accessToken", accessToken() )|]);
+
   let parseResponse = (json: Js.Json.t) => {
     Json.Decode.{
       userId: json |> field("userId", string),
@@ -24,7 +26,11 @@ module Client = {
   let userHistory = (userId:string) => {
     Js.Console.log("Get history " ++ accessToken());
     Js.Promise.(
-      Fetch.fetch(backendURI ++ "/history/" ++ userId)
+      Fetch.fetchWithInit(backendURI ++ "/history/" ++ userId,
+        Fetch.RequestInit.make(
+          ~method_=Get,
+          ~headers=authHeader(),
+          ()))
       |> then_(Fetch.Response.json)
       |> then_(resp => resp |> parseResponse |> resolve)
     );
@@ -34,9 +40,10 @@ module Client = {
   let newEntry = (userId:string, kind: pageType, value: int) => {
     Js.Promise.(
       Fetch.fetchWithInit(backendURI ++ "/history/" ++ userId ++ "/add",
-        Fetch.RequestInit.make(~method_=Post,
+      Fetch.RequestInit.make(
+        ~method_=Post,
         ~body=Fetch.BodyInit.make(Encoders.endcodeInput(kind, value) |> Js.Json.stringify),
-        ~headers=jsonHeader,
+        ~headers=authHeader(),
         ()))
       |> then_(Fetch.Response.json)
       |> then_(resp => resp |> parseResponse |> resolve)
@@ -47,9 +54,10 @@ module Client = {
   let resetUser = (userId:string) => {
     Js.Promise.(
       Fetch.fetchWithInit(backendURI ++ "/history/" ++ userId ++ "/reset",
-        Fetch.RequestInit.make(~method_=Put,
-        ~headers=jsonHeader,
-        ()))
+        Fetch.RequestInit.make(
+          ~method_=Put,
+          ~headers=authHeader(),
+          ()))
       |> then_(Fetch.Response.json)
       |> then_(resp => resp |> parseResponse |> resolve)
     );
