@@ -1,6 +1,5 @@
 [%bs.raw {|require('./toolbox/theme.css')|}];
 [%bs.raw {|require('../node_modules/auth0-js/build/auth0.js')|}];
-[%bs.raw {|require('./toolbox/theme.css')|}];
 
 [@bs.module]
 external theme : ReactToolbox.ThemeProvider.theme = "./toolbox/theme";

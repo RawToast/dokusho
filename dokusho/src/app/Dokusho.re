@@ -5,7 +5,6 @@ open Actions;
 open DokuUtil;
 open Rationale;
 
-
 module Dokusho {
   let component = ReasonReact.reducerComponent("Dokusho");
   let initState = () => {
