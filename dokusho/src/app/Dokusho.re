@@ -9,7 +9,7 @@ open Rationale;
 module Dokusho {
   let component = ReasonReact.reducerComponent("Dokusho");
   let initState = () => {
-    readingData: { days : [Day.now()] },
+    readingData: { days : [ Day.now() ] },
     selectedEntry: Book,
     selectedDate: Js.Date.make()
   };
