@@ -41,6 +41,7 @@ module Auth {
   open Dom.Storage;
 
   let handleAuth = (url: ReasonReact.Router.url) => {
+
     let accessToken = url.hash |> resolveRegex(matchAccessToken);
     let idToken = url.hash |> resolveRegex(matchIdToken);
     let expiresIn = url.hash |> resolveRegex(matchExpiresIn);

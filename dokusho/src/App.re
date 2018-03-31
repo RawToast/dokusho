@@ -17,10 +17,30 @@ let reducer = (action, _state) =>
 
 let component = ReasonReact.reducerComponent("App");
 
+let mapUrlToRoute = (url: ReasonReact.Router.url) => {
+  switch url.path {
+    | [] =>  {
+      Routes.Home;
+    }
+    | ["callback"] => {
+      LoginButton.Auth.handleAuth(url);
+    }
+    | _ => {
+      Routes.Home;
+    }  /* Routes.NotFound */
+  }
+};
+
 let make = _children => {
   ...component,
   reducer,
   initialState: () => { Routes.Home },
+  subscriptions: (self) => [
+    Sub(
+      () => ReasonReact.Router.watchUrl((url) => self.send(ChangeRoute(url |> mapUrlToRoute))),
+        ReasonReact.Router.unwatchUrl
+    )
+  ],
   render: self =>
     <ReactToolbox.ThemeProvider theme>
       <div className="app">
@@ -29,13 +49,4 @@ let make = _children => {
         })
       </div>
     </ReactToolbox.ThemeProvider>
-};
-
-let mapUrlToRoute = (url: ReasonReact.Router.url) =>
-  switch url.path {
-  | [] => Routes.Home
-  | ["callback"] => {
-    LoginButton.Auth.handleAuth(url);
-  }
-  | _ => Routes.Home /* Routes.NotFound */
 };

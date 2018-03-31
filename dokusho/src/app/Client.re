@@ -8,6 +8,9 @@ type serverResponse = {
 };
 
 module Client = {
+  open Dom.Storage;
+
+  let accessToken = () => localStorage |> getItem("accessToken") |> Rationale.Option.default("no_token");
 
   let backendURI = "http://35.189.70.144:8080";
   let jsonHeader = Fetch.HeadersInit.make({"Content-Type": "application/json"});
@@ -18,12 +21,14 @@ module Client = {
     };
   };
   /* Fetches the given user's reading history */
-  let userHistory = (userId:string) =>
+  let userHistory = (userId:string) => {
+    Js.Console.log("Get history " ++ accessToken());
     Js.Promise.(
       Fetch.fetch(backendURI ++ "/history/" ++ userId)
       |> then_(Fetch.Response.json)
       |> then_(resp => resp |> parseResponse |> resolve)
     );
+  };
 
   /* Adds a new reading entry for today to a user's reading history */
   let newEntry = (userId:string, kind: pageType, value: int) => {
