@@ -20,7 +20,9 @@ module Actions = {
             Client.userHistory(userId)
               |> then_((serverResponse: serverResponse) => {
                 if(List.length(serverResponse.readingHistory.days) != 0) {
-                  self.send(UpdateHistory(serverResponse.readingHistory.days))
+                  self.send(
+                    UpdateHistory(
+                      serverResponse.readingHistory.days))
                 };
                 resolve(serverResponse);
               }))

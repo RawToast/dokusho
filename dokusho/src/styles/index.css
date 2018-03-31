@@ -1,70 +1,72 @@
 /* @embed base.css */
 /* reset */
-body, div {
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  flex-shrink: 0;
+
+.dateselector {
+  flex-direction: box;
 }
 
 body {
-font: 14px "Century Gothic", Futura, sans-serif;
+  font: 14px "Century Gothic", Futura, sans-serif;
 }
 
 #root {
-align-items: center;
-justify-content: center;
-position: absolute;
-top: 0;
-left: 0;
-bottom: 0;
-right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
 
 .app {
-width: 280px;
-max-height: 400px;
-flex: 1;
-box-shadow: 0 2px 15px #ccc;
-margin: 10px;
-align-items: stretch;
-}
+  flex-direction: column;
+  width: 280px;
+  max-height: 450px;
+  flex: 1;
+  box-shadow: 0 2px 15px #ccc;
+  margin: 10px;
+  align-items: stretch;
+  }
 
 .title {
-font-size: 20px;
-align-items: center;
-padding: 20px;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  align-items: center;
+  padding: 15px 20px 0px 20px;
+}
+
+.dokusho {
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.textinput {
+  padding-top: 20px;
+  padding-bottom: 10px;
 }
 
 .entries {
-margin: 10px 10px;
-text-align: center;
-flex: 1;
-overflow: auto;
+  flex-direction: column;
+  text-align: center;
+  flex: 1;
+  overflow: auto;
 }
 
 .entry {
-  display: flex;
-  padding: 5px 20px;
+  flex-direction: column;
+  padding: 5px 10px;
   align-items: center;
-  flex-direction: col;
 }
 
 .footer {
-align-items: center;
-padding: 5px 10px 20px;
-}
-
-.checkbox {
-margin-right: 20px;
-}
-
-input[type="checkbox"] {
-margin-right: 10px;
-}
-
-input[type="text"] {
-align-self: stretch;
-padding: 3px 5px;
-margin-top: 20px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+  padding: 5px 10px 20px;
 }

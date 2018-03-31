@@ -17,7 +17,8 @@
     "bs-jest",
     "@glennsl/bs-json",
     "bs-fetch",
-    "rationale"
+    "rationale",
+    "@astrada/reason-react-toolbox"
   ],
   "bs-dev-dependencies" : [
     "bs-jest",

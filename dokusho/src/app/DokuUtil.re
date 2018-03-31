@@ -22,3 +22,19 @@ module DokuUtil = {
     Bytes.sub_string(buf, 0, j^);
   };
 };
+
+module DateUtil = {
+  open Types; 
+
+  let availableDates = (d: readingHistory) => d.days |> List.map(d => Js.Date.fromString(d.date)) |> (ls) => [Js.Date.make(), ...ls] |> Array.of_list;
+
+  let dateWithoutTime = selectedDate => Js.Date.fromFloat(Js.Date.utcWithYMDHMS(
+        ~year=Js.Date.getFullYear(selectedDate),
+        ~month=Js.Date.getMonth(selectedDate), 
+        ~date=Js.Date.getDate(selectedDate),
+        ~hours=0.,
+        ~minutes=0.,
+        ~seconds=0.)());
+
+  let asDateKey = (date) => Js.String.slice(~from=0, ~to_=16, Js.Date.toISOString(date));
+}

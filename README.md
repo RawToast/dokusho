@@ -27,13 +27,13 @@ This is a multi-module project. See the relevent modules for running instruction
 
 ### Minikube
 
-[Minikube](https://github.com/kubernetes/minikube) can be used to run a local kubernetes backend by a Mongo instance. 
+This project is built with Kubernetes for Google Cloud Engine; however, [Minikube](https://github.com/kubernetes/minikube) can be used to run a local backend cluster. 
 
 * `minikube start --vm-driver <hyperkit, xhyve, virtualbox, etc>`
 * `./bin/build-images.sh`
 * `./bin/create-services.sh`
 
-The backend's location can then be found using: `minikube service web --url`.
+The backend's location can then be found using: `minikube service backend --url`.
 
 ## Additional Information
 

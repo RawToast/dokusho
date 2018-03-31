@@ -22,25 +22,21 @@ module Input = {
         ReasonReact.Update({ text: filtered, selection: state.selection })
     },
       render: ({state: state, reduce}) => {
-          <div>
-            <input
-            value=state.text
-            _type="text"
-            pattern="[0-9]*"
-            placeholder="Pages"
-            onChange=((evt) => {
-              let txt = DokuUtil.valueFromEvent(evt);
-              reduce(() => {text: txt, selection: state.selection})()
-            })
-            onKeyDown=((evt) =>
+        <ReactToolbox.Input
+              className="textinput"
+              value=state.text
+              _type="text"
+              hint=str("Pages")
+              onChange=((txt, _mse) => {
+                reduce(() => {text: txt, selection: state.selection})()
+              })
+              onKeyDown=((evt) =>
                 if (ReactEventRe.Keyboard.key(evt) == "Enter") {
-                onSubmit(state.text);
-                (reduce(() => {text: "", selection: state.selection }))()
+                  onSubmit(state.text);
+                  (reduce(() => {text: "", selection: state.selection }))()
                 }
-            )
+              )
             />
-        </div>
-        
-        }
+         }
     };
   };

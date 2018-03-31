@@ -28,14 +28,16 @@ type readingHistory = {days: list(day)};
 
 type mainState = {
   readingData: readingHistory,
-  selectedEntry: pageType
+  selectedEntry: pageType,
+  selectedDate: Js.Date.t
 };
 
 type action =
   | AddEntry(pageType, int)
   | ChangeSelection(pageType)
   | UpdateHistory(list(day))
-  | LoadUserData(string);
+  | LoadUserData(string)
+  | SelectDate(Js.Date.t);
 
 module Decoders = {
   let parsePageType = (asString:string) => {
