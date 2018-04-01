@@ -2,7 +2,8 @@ package dokusho
 
 import cats.effect.IO
 import io.circe.Json
-import org.http4s.HttpService
+import org.http4s.{Header, HttpService}
+import org.http4s.util.CaseInsensitiveString
 
 class ReadingHistoryRouter(readingHistoryService: ReadingHistoryService) extends Http4sRouter {
 
@@ -33,5 +34,16 @@ class ReadingHistoryRouter(readingHistoryService: ReadingHistoryService) extends
       readingHistoryService.reset(userId)
         .map(_.asJson)
         .flatMap(j => Ok(j))
+    case req@GET -> Root / "auth" => {
+      val headerOpt: Header = req.headers
+        .find(_.name == CaseInsensitiveString("User"))
+        .getOrElse(Header("User", "None"))
+
+      println("Header " + headerOpt.value)
+
+      Ok("Hello world: " + headerOpt.value)
+    }
   }
 }
+
+
