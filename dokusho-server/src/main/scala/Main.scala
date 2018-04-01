@@ -24,7 +24,10 @@ object Main extends StreamApp[IO]  {
 
   val readingHistoryService = new ReadingHistoryService(mongo)
   val historyService: ReadingHistoryRouter = new ReadingHistoryRouter(readingHistoryService)
+  val altHistoryService: ReadingHistoryRouter = new AltReadingHistoryRouter(readingHistoryService)
+
   val authHistory = authMiddleware.authenticationMiddleware(historyService.routes)
+
 
   override def stream(args: List[String], requestShutdown: IO[Unit]): Stream[IO, ExitCode] =
     BlazeBuilder[IO]
