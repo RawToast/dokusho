@@ -78,13 +78,12 @@ class AltReadingHistoryRouter(readingHistoryService: ReadingHistoryService) exte
       .map(_.asJson)
       .map(j => Ok(j))
     case req@GET -> Root / "auth" => {
+      // This endpoint should be removed, but right now it's handy for development
       val headerOpt: Header = req.headers
                               .find(_.name == CaseInsensitiveString("User"))
                               .getOrElse(Header("User", "None"))
 
-      println("Header " + headerOpt.value)
-
-      Ok("Hello world: " + headerOpt.value)
+      Ok("Hello: " + headerOpt.value)
     }
   }
 }

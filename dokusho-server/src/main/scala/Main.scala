@@ -32,8 +32,8 @@ object Main extends StreamApp[IO]  {
   override def stream(args: List[String], requestShutdown: IO[Unit]): Stream[IO, ExitCode] =
     BlazeBuilder[IO]
       .bindHttp(8080, "0.0.0.0")
-      .mountService(historyService.routes, "/")
-      .mountService(authHistory, "/authed/")
+      .mountService(historyService.routes, "/noauth")
+      .mountService(authHistory, "/")
       .withBanner(ServerBuilder.DefaultBanner)
       .serve
 }
