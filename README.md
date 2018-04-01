@@ -40,10 +40,10 @@ The backend's location can then be found using: `minikube service backend --url`
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 * [ReasonML](https://reasonml.github.io/)
-* [Reason Scripts](https://github.com/reasonml-community/reason-scripts)
 * [Reason React](https://reasonml.github.io/reason-react/)
 * [Scala](http://scala-lang.org)
 * [Http4s](http://http4s.org)
 * [Kubernetes](https://kubernetes.io)
 * [Minikube](https://github.com/kubernetes/minikube)
 * [MongoDB](https://www.mongodb.com)
+* [Auth0](https://www.auth0.com)
