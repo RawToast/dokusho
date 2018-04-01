@@ -46,7 +46,7 @@ class AltReadingHistoryRouter(readingHistoryService: ReadingHistoryService) exte
     IO(req.headers.find(_.name == CaseInsensitiveString("User")).map(_.value))
 
   implicit private def routeWithErrorHandling(io: OptionT[IO, IO[Response[IO]]]): IO[Response[IO]] =
-    io.value.flatMap(_.getOrElse(Ok("Hey")))
+    io.value.flatMap(_.getOrElse(NotFound()))
 
   val routes: HttpService[IO] = HttpService[IO] {
     case req@GET -> Root / "history" =>

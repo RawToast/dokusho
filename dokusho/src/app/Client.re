@@ -26,7 +26,7 @@ module Client = {
   let userHistory = (userId:string) => {
     Js.Console.log("Get history " ++ accessToken());
     Js.Promise.(
-      Fetch.fetchWithInit(backendURI ++ "/history/" ++ userId,
+      Fetch.fetchWithInit(backendURI ++ "/authed/history",
         Fetch.RequestInit.make(
           ~method_=Get,
           ~headers=authHeader(),
@@ -39,7 +39,7 @@ module Client = {
   /* Adds a new reading entry for today to a user's reading history */
   let newEntry = (userId:string, kind: pageType, value: int) => {
     Js.Promise.(
-      Fetch.fetchWithInit(backendURI ++ "/history/" ++ userId ++ "/add",
+      Fetch.fetchWithInit(backendURI ++ "/authed/history/add",
       Fetch.RequestInit.make(
         ~method_=Post,
         ~body=Fetch.BodyInit.make(Encoders.endcodeInput(kind, value) |> Js.Json.stringify),
@@ -53,7 +53,7 @@ module Client = {
   /* Resets a user's reading history */
   let resetUser = (userId:string) => {
     Js.Promise.(
-      Fetch.fetchWithInit(backendURI ++ "/history/" ++ userId ++ "/reset",
+      Fetch.fetchWithInit(backendURI ++ "/authed/history/reset",
         Fetch.RequestInit.make(
           ~method_=Put,
           ~headers=authHeader(),

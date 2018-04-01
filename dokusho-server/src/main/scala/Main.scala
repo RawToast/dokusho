@@ -33,7 +33,7 @@ object Main extends StreamApp[IO]  {
     BlazeBuilder[IO]
       .bindHttp(8080, "0.0.0.0")
       .mountService(historyService.routes, "/")
-      .mountService(authHistory, "/authed")
+      .mountService(authHistory, "/authed/")
       .withBanner(ServerBuilder.DefaultBanner)
       .serve
 }
