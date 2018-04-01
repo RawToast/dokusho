@@ -35,6 +35,7 @@ class ReadingHistoryRouter(readingHistoryService: ReadingHistoryService) extends
       readingHistoryService.reset(userId)
       .map(_.asJson)
       .flatMap(j => Ok(j))
+  }
 }
 
 class AltReadingHistoryRouter(readingHistoryService: ReadingHistoryService) extends Http4sRouter {
@@ -86,10 +87,4 @@ class AltReadingHistoryRouter(readingHistoryService: ReadingHistoryService) exte
       Ok("Hello world: " + headerOpt.value)
     }
   }
-  }
-
 }
-
-
-
-
