@@ -3,7 +3,8 @@ let testUser = "fully";
 
 module Routes {
   type route =
-  | Home;
+  | Home(string)
+  | NoAuth;
 };
 
 type pageType =

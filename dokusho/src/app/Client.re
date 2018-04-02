@@ -13,7 +13,7 @@ module Client = {
   let accessToken = (default) => sessionStorage |> getItem("accessToken") |> Rationale.Option.default(default);
   let backendURI = "http://35.189.70.144:8080";
   let jsonHeader = Fetch.HeadersInit.make({"Content-Type": "application/json"});
-  let authHeader = () => Fetch.HeadersInit.makeWithArray([|( "Content-Type", "application/json" ), ( "accessToken", accessToken("accessToken") )|]);
+  let authHeader = (default) => Fetch.HeadersInit.makeWithArray([|( "Content-Type", "application/json" ), ( "accessToken", accessToken(default) )|]);
 
   let parseResponse = (json: Js.Json.t) => {
     Json.Decode.{
@@ -32,13 +32,13 @@ module Client = {
         };
 
   /* Fetches the given user's reading history, or an empty one */
-  let userHistory: string => Js.Promise.t(serverResponse) = (_userId:string) => {
+  let userHistory = (userId:string) => {
     Js.Console.log("Get history: " ++ LoginButton.Auth.getAccessToken());
     Js.Promise.(
       Fetch.fetchWithInit(backendURI ++ "/history",
         Fetch.RequestInit.make(
           ~method_=Get,
-          ~headers=authHeader(),
+          ~headers=authHeader(userId),
           ()))
       |> then_(Fetch.Response.text)
       |> then_(resp => resp |> parseResponseT |> resolve)
@@ -46,13 +46,13 @@ module Client = {
   };
 
   /* Adds a new reading entry for today to a user's reading history */
-  let newEntry = (_userId:string, kind: pageType, value: int) => {
+  let newEntry = (userId:string, kind: pageType, value: int) => {
     Js.Promise.(
       Fetch.fetchWithInit(backendURI ++ "/history/add",
       Fetch.RequestInit.make(
         ~method_=Post,
         ~body=Fetch.BodyInit.make(Encoders.endcodeInput(kind, value) |> Js.Json.stringify),
-        ~headers=authHeader(),
+        ~headers=authHeader(userId),
         ()))
       |> then_(Fetch.Response.json)
       |> then_(resp => resp |> parseResponse |> resolve)
@@ -60,12 +60,12 @@ module Client = {
   };
 
   /* Resets a user's reading history */
-  let resetUser = (_userId:string) => {
+  let resetUser = (userId:string) => {
     Js.Promise.(
       Fetch.fetchWithInit(backendURI ++ "/history/reset",
         Fetch.RequestInit.make(
           ~method_=Put,
-          ~headers=authHeader(),
+          ~headers=authHeader(userId),
           ()))
       |> then_(Fetch.Response.json)
       |> then_(resp => resp |> parseResponse |> resolve)

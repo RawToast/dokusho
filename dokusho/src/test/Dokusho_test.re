@@ -24,8 +24,8 @@ describe("Dokusho.initialState", () => {
   });
 
   describe("Dokusho.make", () => {  
-    test("can render without any provided parameters", () => {
-      let component = ReactShallowRenderer.renderWithRenderer(<Dokusho />);
+    test("requires a string value to render", () => {
+      let component = ReactShallowRenderer.renderWithRenderer(<Dokusho token=""/>);
   
       expect(Js.Undefined.return(component)) |> toBeDefined;
     });
