@@ -37,7 +37,6 @@ module Auth {
     };
   };
 
-  open Types;
   open Dom.Storage;
 
   let handleAuth = (url: ReasonReact.Router.url) => {
@@ -48,8 +47,6 @@ module Auth {
     localStorage |> setItem("accessToken", accessToken);
     localStorage |> setItem("id_token", idToken);
     localStorage |> setItem("expiresIn", expiresIn);
-
-    Routes.Home;
   };
 
   let getIdToken = () => localStorage |> getItem("id_token") |> resolveOption;

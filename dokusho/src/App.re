@@ -23,7 +23,8 @@ let mapUrlToRoute = (url: ReasonReact.Router.url) => {
       Routes.Home;
     }
     | ["callback"] => {
-      LoginButton.Auth.handleAuth(url);
+      ReasonReact.Router.push("/");
+      Routes.Home;
     }
     | _ => {
       Routes.Home;

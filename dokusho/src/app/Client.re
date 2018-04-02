@@ -11,7 +11,6 @@ module Client = {
   open Dom.Storage;
 
   let accessToken = () => localStorage |> getItem("accessToken") |> Rationale.Option.default("no_token");
-
   let backendURI = "http://35.189.70.144:8080";
   let jsonHeader = Fetch.HeadersInit.make({"Content-Type": "application/json"});
   let authHeader = () => Fetch.HeadersInit.makeWithArray([|( "Content-Type", "application/json" ), ( "accessToken", accessToken() )|]);
@@ -22,8 +21,18 @@ module Client = {
       readingHistory: json |> field("readingHistory", Decoders.parseHistory)
     };
   };
-  /* Fetches the given user's reading history */
-  let userHistory = (_userId:string) => {
+
+  let parseResponseT = (jString) => 
+    Json.parse(jString)
+      |> Rationale.Option.default(Json.parseOrRaise("{\"userId\": \"userId\",\"readingHistory\": {\"days\": [] } }"))
+      |> json =>
+        Json.Decode.{
+          userId: json |> field("userId", string),
+          readingHistory: json |> field("readingHistory", Decoders.parseHistory)
+        };
+
+  /* Fetches the given user's reading history, or an empty one */
+  let userHistory: string => Js.Promise.t(serverResponse) = (_userId:string) => {
     Js.Console.log("Get history " ++ accessToken());
     Js.Promise.(
       Fetch.fetchWithInit(backendURI ++ "/history",
@@ -31,8 +40,8 @@ module Client = {
           ~method_=Get,
           ~headers=authHeader(),
           ()))
-      |> then_(Fetch.Response.json)
-      |> then_(resp => resp |> parseResponse |> resolve)
+      |> then_(Fetch.Response.text)
+      |> then_(resp => resp |> parseResponseT |> resolve)
     );
   };
 
