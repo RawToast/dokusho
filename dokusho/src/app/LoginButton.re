@@ -44,13 +44,18 @@ module Auth {
     let accessToken = url.hash |> resolveRegex(matchAccessToken);
     let idToken = url.hash |> resolveRegex(matchIdToken);
     let expiresIn = url.hash |> resolveRegex(matchExpiresIn);
-    localStorage |> setItem("accessToken", accessToken);
-    localStorage |> setItem("id_token", idToken);
-    localStorage |> setItem("expiresIn", expiresIn);
+    Js.Console.log("Storing auth: " ++ accessToken);
+    
+    sessionStorage |> setItem("accessToken", accessToken);
+    sessionStorage |> setItem("id_token", idToken);
+    sessionStorage |> setItem("expiresIn", expiresIn);
+
+    accessToken;
   };
 
-  let getIdToken = () => localStorage |> getItem("id_token") |> resolveOption;
+  let getIdToken = () => sessionStorage |> getItem("id_token") |> resolveOption;
 
+  let getAccessToken = () => (sessionStorage |> getItem("accessToken") |> resolveOption);
 };
 
 let authOptions = {

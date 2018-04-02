@@ -10,10 +10,10 @@ type serverResponse = {
 module Client = {
   open Dom.Storage;
 
-  let accessToken = () => localStorage |> getItem("accessToken") |> Rationale.Option.default("no_token");
+  let accessToken = (default) => sessionStorage |> getItem("accessToken") |> Rationale.Option.default(default);
   let backendURI = "http://35.189.70.144:8080";
   let jsonHeader = Fetch.HeadersInit.make({"Content-Type": "application/json"});
-  let authHeader = () => Fetch.HeadersInit.makeWithArray([|( "Content-Type", "application/json" ), ( "accessToken", accessToken() )|]);
+  let authHeader = () => Fetch.HeadersInit.makeWithArray([|( "Content-Type", "application/json" ), ( "accessToken", accessToken("accessToken") )|]);
 
   let parseResponse = (json: Js.Json.t) => {
     Json.Decode.{
@@ -33,7 +33,7 @@ module Client = {
 
   /* Fetches the given user's reading history, or an empty one */
   let userHistory: string => Js.Promise.t(serverResponse) = (_userId:string) => {
-    Js.Console.log("Get history " ++ accessToken());
+    Js.Console.log("Get history: " ++ LoginButton.Auth.getAccessToken());
     Js.Promise.(
       Fetch.fetchWithInit(backendURI ++ "/history",
         Fetch.RequestInit.make(

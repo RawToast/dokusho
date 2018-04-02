@@ -19,11 +19,12 @@ let component = ReasonReact.reducerComponent("App");
 
 let mapUrlToRoute = (url: ReasonReact.Router.url) => {
   switch url.path {
-    | [] =>  {
+    | ["callback"] => {
+      let _token = LoginButton.Auth.handleAuth(url);
       Routes.Home;
     }
-    | ["callback"] => {
-      ReasonReact.Router.push("/");
+    | [] =>  {
+      Js.Console.log("Home");
       Routes.Home;
     }
     | _ => {
@@ -47,7 +48,7 @@ let make = _children => {
       <div className="app">
         (switch self.state {
         | Routes.Home => <Dokusho/>
-        })
+      })
       </div>
     </ReactToolbox.ThemeProvider>
 };
