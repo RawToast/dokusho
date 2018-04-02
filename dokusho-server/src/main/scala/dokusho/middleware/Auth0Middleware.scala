@@ -35,8 +35,6 @@ class Auth0Middleware(client: Client[IO]) extends Http4sRouter {
   }
 
   private def callService(c: Client[IO], authToken: Header): IO[String] = {
-    println("Header: " + authToken.name + " " + authToken.value)
-
     c.fetch(Request.apply[IO](
       method = GET,
       uri = Uri.unsafeFromString("https://dokusho.eu.auth0.com/userinfo"),

@@ -1,6 +1,6 @@
 import cats.effect.IO
 import dokusho.middleware.Auth0Middleware
-import dokusho.{MongoRepository, ReadingHistoryRouter, AltReadingHistoryRouter, ReadingHistoryService}
+import dokusho.{MongoRepository, ReadingHistoryRouter, ReadingHistoryService}
 import fs2.StreamApp.ExitCode
 import fs2.{Stream, StreamApp}
 import org.http4s.client.Client
@@ -21,12 +21,10 @@ object Main extends StreamApp[IO]  {
   lazy val pclient: Client[IO] = PooledHttp1Client[IO]()
 
   val authMiddleware: Auth0Middleware = new Auth0Middleware(pclient)
-
   val readingHistoryService = new ReadingHistoryService(mongo)
-  val historyService: ReadingHistoryRouter = new ReadingHistoryRouter(readingHistoryService)
-  val altHistoryService = new AltReadingHistoryRouter(readingHistoryService)
+  val historyService = new ReadingHistoryRouter(readingHistoryService)
 
-  val authHistory = authMiddleware.authenticationMiddleware(altHistoryService.routes)
+  val authHistory = authMiddleware.authenticationMiddleware(historyService.routes)
 
 
   override def stream(args: List[String], requestShutdown: IO[Unit]): Stream[IO, ExitCode] =

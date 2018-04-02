@@ -14,12 +14,24 @@ class ReadingHistoryService(mongoRepository: HistoryRepository) {
   def getReadingHistory(userId: String): IO[Option[UserReadingHistory]] =
     mongoRepository.get(userId)
 
+  def getOrMakeReadingHistory(userId: String): IO[UserReadingHistory] =
+    OptionT(mongoRepository.get(userId))
+      .getOrElseF(reset(userId))
+
   def addNewEntry(userId: String, newEntry: NewEntry): IO[Option[UserReadingHistory]] = {
     lazy val update = daysLens.modify(updateDay(newEntry))
     OptionT(getReadingHistory(userId))
       .map(update)
       .semiflatMap(upsert)
       .value
+  }
+
+  def upsertNewEntry(userId: String, newEntry: NewEntry): IO[UserReadingHistory] = {
+    lazy val update = daysLens.modify(updateDay(newEntry))
+    OptionT(getReadingHistory(userId))
+      .getOrElseF(reset(userId))
+      .map(update)
+      .flatMap(upsert)
   }
 
   def upsert(userReadingHistory: UserReadingHistory): IO[UserReadingHistory] =
