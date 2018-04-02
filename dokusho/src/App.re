@@ -6,6 +6,7 @@ external theme : ReactToolbox.ThemeProvider.theme = "./toolbox/theme";
 
 open Dokusho;
 open Types;
+open Auth;
 
 type action =
   | ChangeRoute(Routes.route);
@@ -20,13 +21,14 @@ let component = ReasonReact.reducerComponent("App");
 let mapUrlToRoute = (url: ReasonReact.Router.url) => {
   switch url.path {
     | ["callback"] => {
-      let token = LoginButton.Auth.handleAuth(url);
+      let token = Auth.handleAuth(url);
+      ReasonReact.Router.push("/");
       Routes.Home(token);
     }
     | [] =>  {
       Js.Console.log("Home");
-      let token = LoginButton.Auth.getAccessToken();
-      if(token == "") Routes.NoAuth else Routes.Home(token);
+      let token = Auth.getAccessToken();
+      if(token == "" && !Auth.tokenStillValid()) Routes.NoAuth else Routes.Home(token);
     }
     | _ => {
       Routes.NoAuth;
@@ -49,7 +51,7 @@ let make = _children => {
       <div className="app">
         (switch self.state {
         | Routes.Home(token) => <Dokusho token=token/>
-        | Routes.NoAuth => <LoginButton />
+        | Routes.NoAuth => <Login />
       })
       </div>
     </ReactToolbox.ThemeProvider>

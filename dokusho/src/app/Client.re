@@ -1,6 +1,7 @@
 [%raw "require('isomorphic-fetch')"];
 
 open Types;
+open Auth;
 
 type serverResponse = {
   userId: string,
@@ -33,7 +34,7 @@ module Client = {
 
   /* Fetches the given user's reading history, or an empty one */
   let userHistory = (userId:string) => {
-    Js.Console.log("Get history: " ++ LoginButton.Auth.getAccessToken());
+    Js.Console.log("Get history: " ++ Auth.getAccessToken());
     Js.Promise.(
       Fetch.fetchWithInit(backendURI ++ "/history",
         Fetch.RequestInit.make(
