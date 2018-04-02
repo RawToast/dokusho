@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@glennsl/bs-json": "^1.1.3",
+    "auth0-js": "^9.4.2",
     "bs-fetch": "^0.2.1",
     "isomorphic-fetch": "^2.2.1",
     "rationale": "^0.1.3",
@@ -13,13 +14,13 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-toolbox-themr react-scripts build",
+    "build": "react-toolbox-themr && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "coverage": "react-scripts test --env=jsdom --coverage",
     "ci": "react-scripts test --env=jsdom --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "eject": "react-scripts eject",
     "prepare": "npm link bs-platform",
-    "clean": "rm -rf lib && rm -rf node_modules"
+    "clean": "rm -rf lib && rm -rf node_modules && rm -rf build"
   },
   "devDependencies": {
     "@astrada/reason-react-toolbox": "^0.4.2",

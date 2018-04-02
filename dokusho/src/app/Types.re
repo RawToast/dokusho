@@ -1,6 +1,11 @@
 /* TODO: Remove this for real authentication */
 let testUser = "fully";
 
+module Routes {
+  type route =
+  | Home;
+};
+
 type pageType =
   | Manga
   | News
@@ -39,7 +44,19 @@ type action =
   | LoadUserData(string)
   | SelectDate(Js.Date.t);
 
+type authData = { 
+  accessToken: string,
+  idToken: string,
+  expiresIn: string
+};
+
 module Decoders = {
+  let parseAuthData = (json: Js.Json.t) : authData =>
+    Json.Decode.{
+      accessToken: json |> field("accessToken", string),
+      idToken: json |> field("idToken", string),
+      expiresIn: json |> field("expiresIn", string)
+    };
   let parsePageType = (asString:string) => {
     switch (asString) {
     | "Manga" => Manga
@@ -68,6 +85,14 @@ module Decoders = {
 };
 
 module Encoders = {
+  let encodeAuthData = authData =>
+    Json.Encode.(
+      object_([
+        ("accessToken", string(authData.accessToken)),
+        ("idToken", string(authData.idToken)),
+        ("expiresIn", string(authData.expiresIn))
+      ])
+    );
   let encodeEntry = entry =>
     Json.Encode.(
       object_([

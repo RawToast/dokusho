@@ -16,16 +16,15 @@ module Actions = {
 
     let loadUserData = (userId) => ReasonReact.SideEffects(
         (self =>
-          Js.Promise.(
             Client.userHistory(userId)
-              |> then_((serverResponse: serverResponse) => {
+              |> Js.Promise.then_((serverResponse: serverResponse) => {
                 if(List.length(serverResponse.readingHistory.days) != 0) {
                   self.send(
                     UpdateHistory(
                       serverResponse.readingHistory.days))
                 };
-                resolve(serverResponse);
-              }))
+                Js.Promise.resolve(serverResponse);
+              })
           |> ignore
         )
       );

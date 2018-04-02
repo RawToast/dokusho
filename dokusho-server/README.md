@@ -19,7 +19,7 @@ Once the frontend reaches a reasonable level of functionality, this backend serv
 * Replace a user's reading history
   * PUT `user/<userID>` 
 * Add a new entry to the user's reading history
-  * POST  `user/<userID>/add`
+  * POST `user/<userID>/add`
 
 
 ## Additional Information

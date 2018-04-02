@@ -8,7 +8,7 @@ open Rationale;
 module Dokusho {
   let component = ReasonReact.reducerComponent("Dokusho");
   let initState = () => {
-    readingData: { days : [Day.now()] },
+    readingData: { days : [ Day.now() ] },
     selectedEntry: Book,
     selectedDate: Js.Date.make()
   };
@@ -42,6 +42,7 @@ module Dokusho {
       let availableDates = DateUtil.availableDates(self.state.readingData);
 
           <div>
+            <LoginButton />
             <div className="title"> 
               (ReasonReact.stringToElement("Dokusho"))
             </div> 
