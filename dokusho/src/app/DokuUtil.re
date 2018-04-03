@@ -26,7 +26,10 @@ module DokuUtil = {
 module DateUtil = {
   open Types; 
 
-  let availableDates = (d: readingHistory) => d.days |> List.map(d => Js.Date.fromString(d.date)) |> (ls) => [Js.Date.make(), ...ls] |> Array.of_list;
+  let availableDates = (d: readingHistory) => d.days 
+      |> List.map(d => Js.Date.fromString(d.date)) 
+      |> (ls) => [Js.Date.make(), ...ls] 
+      |> Array.of_list;
 
   let dateWithoutTime = selectedDate => Js.Date.fromFloat(Js.Date.utcWithYMDHMS(
         ~year=Js.Date.getFullYear(selectedDate),

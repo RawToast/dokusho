@@ -4,15 +4,12 @@ let component = ReasonReact.statelessComponent("Entry");
 
 let make = (~entries: list(entry), _children) => {
   ...component,
-  render: (_) =>
+  render: (_) => {
     <div className="entries">
-      (
-        entries
-        |> List.map((entry: entry) =>
-             <Entry key=(string_of_int(entry.id)) entry />
-           )
+      (entries 
+        |> List.map((entry: entry) => <Entry key=(string_of_int(entry.id)) entry />)
         |> Array.of_list
-        |> ReasonReact.arrayToElement
-      )
+        |> ReasonReact.arrayToElement)
     </div>
+  }
 };

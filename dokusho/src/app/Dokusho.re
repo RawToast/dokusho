@@ -13,7 +13,7 @@ module Dokusho {
     selectedDate: Js.Date.make()
   };
   
-  let make = (_children) => {
+  let make = (~token, _children) => {
     ...component,
     initialState: () => initState(),
     reducer: (action, { readingData, selectedEntry, selectedDate }) => 
@@ -30,7 +30,7 @@ module Dokusho {
             ReasonReact.Update({readingData: readingData, selectedEntry: selectedEntry, selectedDate: date});
           },
     didMount: (_self) => {
-      Actions.loadUserData(testUser);
+      Actions.loadUserData(token);
     },
     render: (self) => {
       let dateKey = self.state.selectedDate |> DateUtil.dateWithoutTime |> DateUtil.asDateKey;
@@ -42,7 +42,6 @@ module Dokusho {
       let availableDates = DateUtil.availableDates(self.state.readingData);
 
           <div>
-            <LoginButton />
             <div className="title"> 
               (ReasonReact.stringToElement("Dokusho"))
             </div> 

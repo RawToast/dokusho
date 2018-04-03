@@ -34,15 +34,41 @@ body {
 .title {
   display: flex;
   flex-direction: column;
-  font-size: 20px;
+  font-size: 22px;
   align-items: center;
   padding: 15px 20px 0px 20px;
+}
+
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 20px 0px 20px;
+}
+
+.loginbutton {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  align-items: center;
+  padding: 20px 20px 0px 20px;
 }
 
 .dokusho {
   align-items: center;
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.desc {
+  font: 13px "Century Gothic", Futura, sans-serif;
+  align-items: center;
+  font-size: 13px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: darkslategray;
 }
 
 .textinput {
