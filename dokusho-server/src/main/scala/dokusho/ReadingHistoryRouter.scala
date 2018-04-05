@@ -3,10 +3,11 @@ package dokusho
 import cats.data.OptionT
 import cats.effect.IO
 import org.http4s.util.CaseInsensitiveString
-import org.http4s.{Header, HttpService, Request, Response}
+import org.http4s.{HttpService, Request, Response}
 
 class ReadingHistoryRouter(readingHistoryService: ReadingHistoryService) extends Http4sRouter {
   private val service = readingHistoryService
+
   case class SuccessfulPut(userId: String)
 
   def getUserId(req: Request[IO]): IO[Option[String]] =
@@ -29,34 +30,27 @@ class ReadingHistoryRouter(readingHistoryService: ReadingHistoryService) extends
   val routes: HttpService[IO] = HttpService[IO] {
     case req@GET -> Root / "history" =>
       OptionT(getUserId(req))
-        .flatMapF(userId => service.getReadingHistory(userId))
-        .map(_.asJson)
-        .map(json => Ok(json))
-        .value.flatMap(_.getOrElse(NotFound()))
+      .flatMapF(userId => service.getReadingHistorySummary(userId))
+      .map(_.asJson)
+      .map(json => Ok(json))
+      .value.flatMap(_.getOrElse(NotFound()))
     case req@PUT -> Root / "history" =>
       OptionT(getUserId(req))
-        .semiflatMap(userId => req.withReadingHistory(rh => service.upsert(UserReadingHistory(userId, rh))))
-        .map(storedHistory => SuccessfulPut(storedHistory.userId))
-        .map(sp => Ok(sp.asJson))
-        .value.flatMap(_.getOrElse(NotFound()))
+      .semiflatMap(userId => req.withReadingHistory(rh => service.upsert(UserReadingHistory(userId, rh))))
+      .map(storedHistory => SuccessfulPut(storedHistory.userId))
+      .map(sp => Ok(sp.asJson))
+      .value.flatMap(_.getOrElse(NotFound()))
     case req@POST -> Root / "history" / "add" =>
       OptionT(getUserId(req))
-        .semiflatMap(userId => req.withEntry(e => service.upsertNewEntry(userId, e)))
-        .map(storedHistory => storedHistory.asJson)
-        .map(json => Ok(json))
-        .value.flatMap(_.getOrElse(BadRequest()))
+      .semiflatMap(userId => req.withEntry(e => service.upsertNewEntry(userId, e)))
+      .map(storedHistory => storedHistory.asJson)
+      .map(json => Ok(json))
+      .value.flatMap(_.getOrElse(BadRequest()))
     case req@PUT -> Root / "history" / "reset" =>
       OptionT(getUserId(req))
-        .semiflatMap(userId => service.reset(userId))
-        .map(_.asJson)
-        .map(j => Ok(j))
-        .value.flatMap(_.getOrElse(BadRequest()))
-    case req@GET -> Root / "auth" =>
-        // This endpoint should be removed, but right now it's handy for development
-        val headerOpt: Header = req.headers
-                                  .find(_.name == CaseInsensitiveString("User"))
-                                  .getOrElse(Header("User", "None"))
-
-        Ok("Hello: " + headerOpt.value)
+      .semiflatMap(userId => service.reset(userId))
+      .map(_.asJson)
+      .map(j => Ok(j))
+      .value.flatMap(_.getOrElse(BadRequest()))
   }
 }

@@ -45,11 +45,14 @@ class ReadingHistoryServiceSpec extends FreeSpec {
         }
 
         "and entries exist for the date" - {
-          lazy val previousEntry = NewEntry(Book, 1)
-          lazy val newEntry = NewEntry(Book, 2)
+          lazy val previousEntry1 = NewEntry(Book, 1)
+          lazy val previousEntry2 = NewEntry(Manga, 1)
+          lazy val newEntry = NewEntry(Book, 1)
+
           lazy val result = {
             val rhs = new ReadingHistoryService(stubRepository("userId"))
-            rhs.addNewEntry("userId", previousEntry).unsafeRunSync()
+            rhs.addNewEntry("userId", previousEntry1).unsafeRunSync()
+            rhs.addNewEntry("userId", previousEntry2).unsafeRunSync()
             rhs.addNewEntry("userId", newEntry).unsafeRunSync()
           }
 
@@ -69,8 +72,16 @@ class ReadingHistoryServiceSpec extends FreeSpec {
                        .getOrElse(Day("No", Seq()))
             assert(days.date != "No")
             assert(days.entries.size == 2)
-            assert(days.entries.exists(e => (e.kind == previousEntry.kind) && e.value == previousEntry.value))
-            assert(days.entries.exists(e => (e.kind == newEntry.kind) && e.value == newEntry.value))
+            assert(days.entries.exists(e => (e.kind == previousEntry2.kind) && e.value == previousEntry2.value))
+            assert(days.entries.exists(e => e.kind == newEntry.kind))
+          }
+
+          "should combine with any existing entries for the same page type" in {
+            val days = result
+                       .flatMap(_.readingHistory.days.headOption)
+                       .getOrElse(Day("No", Seq()))
+            assert(days.date != "No")
+            assert(days.entries.exists(e => (e.kind == newEntry.kind) && e.value == previousEntry1.value + newEntry.value))
           }
         }
       }
