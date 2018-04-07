@@ -15,6 +15,9 @@ spec:
       containers:
       - image: gcr.io/dokusho-199010/dokusho-server:latest
         name: backend
+        resources:
+          requests:
+            cpu: "50m"
         ports:
         - containerPort: 8080
           name: backend

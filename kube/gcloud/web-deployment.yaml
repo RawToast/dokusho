@@ -17,6 +17,9 @@ spec:
       containers:
       - image: gcr.io/dokusho-199010/dokusho-web:latest
         name: web
+        resources:
+          requests:
+            cpu: "50m"
         ports:
         - containerPort: 3000
           name: web-port
