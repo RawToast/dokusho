@@ -1,6 +1,3 @@
-/* TODO: Remove this for real authentication */
-let testUser = "fully";
-
 module Routes {
   type route =
   | Home(string)
