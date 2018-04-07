@@ -58,9 +58,8 @@ module Dokusho {
                 enabledDates=(availableDates) />  
 
               <Entries entries=(entries) />
-            
-              <Footer pageCount=(pageCount) />
-            </div>
+           </div>
+            <Footer pageCount=(pageCount) />
           </div>
     }
   };  

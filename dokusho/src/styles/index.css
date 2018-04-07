@@ -29,6 +29,7 @@ body {
   box-shadow: 0 2px 15px #ccc;
   margin: 10px;
   align-items: stretch;
+  position: relative;
   }
 
 .title {
@@ -90,9 +91,8 @@ body {
 }
 
 .footer {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  align-self: flex-end;
-  padding: 5px 10px 20px;
+  position: absolute;
+  padding-bottom: 15px;
+  bottom:0;
+  left: 40%
 }
