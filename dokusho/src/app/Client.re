@@ -12,7 +12,7 @@ module Client = {
   open Dom.Storage;
 
   let accessToken = (default) => sessionStorage |> getItem("accessToken") |> Rationale.Option.default(default);
-  let backendURI = "http://35.189.70.144:8080";
+  let backendURI = "http://35.197.251.200:8080";
   let jsonHeader = Fetch.HeadersInit.make({"Content-Type": "application/json"});
   let authHeader = (default) => Fetch.HeadersInit.makeWithArray([|( "Content-Type", "application/json" ), ( "accessToken", accessToken(default) )|]);
 

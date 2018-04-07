@@ -2,10 +2,10 @@ open Client;
 open Types;
 
 module Actions = {
-    let addNewEntry = (pageType, count) => ReasonReact.SideEffects(
+    let addNewEntry = (userId, pageType, count) => ReasonReact.SideEffects(
         ( self =>
         Js.Promise.(
-            Client.newEntry(Types.testUser, pageType, count)
+            Client.newEntry(userId, pageType, count)
             |> then_((serverResponse: serverResponse) => {
             self.send(UpdateHistory(serverResponse.readingHistory.days));
             resolve(serverResponse);

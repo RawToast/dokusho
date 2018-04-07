@@ -21,7 +21,7 @@ module Dokusho {
         | ChangeSelection(pageType) => 
             ReasonReact.Update({readingData: readingData, selectedEntry: pageType, selectedDate: selectedDate});
         | AddEntry(pageType, count) =>  
-            Actions.addNewEntry(pageType, count);
+            Actions.addNewEntry(token, pageType, count);
         | UpdateHistory(days) => 
             ReasonReact.Update({readingData: {days: days}, selectedEntry: selectedEntry, selectedDate: selectedDate}); 
         | LoadUserData(userId) => 
@@ -58,9 +58,8 @@ module Dokusho {
                 enabledDates=(availableDates) />  
 
               <Entries entries=(entries) />
-            
-              <Footer pageCount=(pageCount) />
-            </div>
+           </div>
+            <Footer pageCount=(pageCount) />
           </div>
     }
   };  
