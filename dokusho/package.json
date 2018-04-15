@@ -20,7 +20,8 @@
     "ci": "react-scripts test --env=jsdom --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "eject": "react-scripts eject",
     "prepare": "npm link bs-platform",
-    "clean": "rm -rf lib && rm -rf node_modules && rm -rf build"
+    "clean": "rm -rf lib && rm -rf node_modules && rm -rf build",
+    "toolbox": "react-toolbox-themr"
   },
   "devDependencies": {
     "@astrada/reason-react-toolbox": "^0.4.2",
