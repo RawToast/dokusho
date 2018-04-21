@@ -35,6 +35,11 @@ This project is built with Kubernetes for Google Cloud Engine; however, [Minikub
 
 The backend's location can then be found using: `minikube service backend --url`.
 
+### CORS
+
+CORS headers are not set so to use the frontend CORS protection needs to be disabled. On Mac OS Chrome can be started as follows: `open -a Google\ Chrome --args --disable-web-security --user-data-dir`
+
+
 ## Additional Information
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
