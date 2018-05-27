@@ -14,14 +14,13 @@
   ],
   "bs-dependencies": [
     "reason-react",
-    "bs-jest",
     "@glennsl/bs-json",
     "bs-fetch",
     "rationale",
     "@astrada/reason-react-toolbox"
   ],
   "bs-dev-dependencies" : [
-    "bs-jest",
+    "@glennsl/bs-jest",
     "bs-react-test-renderer"
   ],
   "reason": {

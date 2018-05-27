@@ -7,6 +7,6 @@ describe("Input", () => {
 
     describe("Input.render", () => {  
       test("Is an alias for React", () =>
-        expect(Input.str("Hello")) |> toBe(ReasonReact.stringToElement("Hello")));
+        expect(Input.str("Hello")) |> toBe(ReasonReact.string("Hello")));
     });
 });

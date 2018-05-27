@@ -4,10 +4,10 @@ let make = (_) => {
   ...component,
   render: (_) =>
     <div>
-      <div className="title"> (ReasonReact.stringToElement("Dokusho")) </div>
+      <div className="title"> (ReasonReact.string("Dokusho")) </div>
       <div className="desc">
         <text>
-          (ReasonReact.stringToElement(
+          (ReasonReact.string(
               "Dokusho is a japanese reading tracker"
             )
           )
