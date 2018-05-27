@@ -29,8 +29,8 @@ module Dokusho {
         | SelectDate(date) => 
             ReasonReact.Update({readingData: readingData, selectedEntry: selectedEntry, selectedDate: date});
           },
-    didMount: (_self) => {
-      Actions.loadUserData(token);
+    didMount: (self) => {
+      self.send(LoadUserData(token));
     },
     render: (self) => {
       let dateKey = self.state.selectedDate |> DateUtil.dateWithoutTime |> DateUtil.asDateKey;
@@ -43,18 +43,21 @@ module Dokusho {
 
           <div>
             <div className="title"> 
-              (ReasonReact.stringToElement("Dokusho"))
+              (ReasonReact.string("Dokusho"))
             </div> 
             <div className="dokusho">
               <Input 
                 selection=self.state.selectedEntry
-                onSubmit=(self.reduce((text) => AddEntry(self.state.selectedEntry, int_of_string(text))))
+                onSubmit=(text => self.send(AddEntry(self.state.selectedEntry, int_of_string(text))))
                 />
 
-              <PageTypeSelection onChangeSelect=(self.reduce(selected => ChangeSelection(selected))) />
+              <PageTypeSelection onChangeSelect=(selected => self.send(ChangeSelection(selected))) />
             
               <DateSelector 
-                onChangeSelect=(self.reduce(date => SelectDate(date))) 
+                onChangeSelect=(date => {
+                  let action = SelectDate(date);
+                  self.send(action)}
+                )
                 enabledDates=(availableDates) />  
 
               <Entries entries=(entries) />

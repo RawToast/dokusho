@@ -6,7 +6,7 @@ module Input = {
       text: string, 
       selection: pageType
     };
-    let str = ReasonReact.stringToElement;
+    let str = ReasonReact.string;
     let numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
     let component = ReasonReact.reducerComponent("Input");
 
@@ -21,19 +21,19 @@ module Input = {
           );
         ReasonReact.Update({ text: filtered, selection: state.selection })
     },
-      render: ({state: state, reduce}) => {
+      render: self => {
         <ReactToolbox.Input
               className="textinput"
-              value=state.text
+              value=self.state.text
               _type="text"
               hint=str("Pages")
               onChange=((txt, _mse) => {
-                reduce(() => {text: txt, selection: state.selection})()
+                self.send({text: txt, selection: self.state.selection})
               })
               onKeyDown=((evt) =>
                 if (ReactEventRe.Keyboard.key(evt) == "Enter") {
-                  onSubmit(state.text);
-                  (reduce(() => {text: "", selection: state.selection }))()
+                  onSubmit(self.state.text);
+                  self.send({text: "", selection: self.state.selection })
                 }
               )
             />
