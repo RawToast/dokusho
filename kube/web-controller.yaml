@@ -15,6 +15,7 @@ spec:
     spec:
       containers:
       - image: gcr.io/dokusho-199010/dokusho-frontend:latest
+        imagePullPolicy: Never
         name: web
         ports:
         - containerPort: 3000

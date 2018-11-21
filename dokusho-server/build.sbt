@@ -2,11 +2,13 @@ name := "dokusho-server"
 
 mainClass in(Compile, run) := Some("Main")
 
-val SCALA_VERSION = "2.12.4"
-val CIRCE_VERSION = "0.9.2"
-val HTTP4S_VERSION = "0.18.3"
-val MONGO_VERSION = "2.2.1"
-val MONOCLE_VERSION = "1.5.0"
+val SCALA_VERSION = "2.12.7"
+
+val CIRCE_VERSION = "0.10.1"
+val HTTP4S_VERSION = "0.18.21"
+val KIND_PROJECTOR_VERSION = "0.9.8"
+val MONGO_VERSION = "2.5.0"
+val MONOCLE_VERSION = "1.5.1-cats"
 
 resolvers ++= Seq(
   Resolver.sonatypeRepo("releases"),
@@ -30,6 +32,8 @@ libraryDependencies ++= Seq(
 
   "com.github.julien-truffaut" %%  "monocle-core"  % MONOCLE_VERSION,
   "com.github.julien-truffaut" %%  "monocle-macro" % MONOCLE_VERSION,
+
+  "org.spire-math"  %% "kind-projector" % KIND_PROJECTOR_VERSION,
 
   "org.scalatest" % "scalatest_2.12" % "3.0.5" % Test
 )

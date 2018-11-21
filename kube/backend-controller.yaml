@@ -5,7 +5,7 @@ metadata:
     name: backend
   name: backend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     name: backend
   template:
@@ -14,7 +14,8 @@ spec:
         name: backend
     spec:
       containers:
-      - image: gcr.io/dokusho-199010/dokusho-server
+      - image: gcr.io/dokusho-199010/dokusho-server:latest
+        imagePullPolicy: Never
         name: backend
         ports:
         - containerPort: 8080
