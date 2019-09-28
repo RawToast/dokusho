@@ -9,9 +9,9 @@ matrix:
       script: ["yarn add coveralls", "yarn bsb -clean-world -make-world", "yarn ci"]
 
     - language: scala
-      jdk: oraclejdk8
+      jdk: oraclejdk9
       scala: 
-        - 2.12.4
+        - 2.12.9
       before_script:
         - cd dokusho-server
       script: 

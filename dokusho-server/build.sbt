@@ -2,7 +2,7 @@ name := "dokusho-server"
 
 mainClass in(Compile, run) := Some("Main")
 
-val SCALA_VERSION = "2.12.7"
+val SCALA_VERSION = "2.12.9"
 
 val CIRCE_VERSION = "0.10.1"
 val HTTP4S_VERSION = "0.18.21"
