@@ -30,4 +30,4 @@ toolbox/
 *.bs.js
  # Cache and runtime files
 .cache/
-dist/ 
+dist/

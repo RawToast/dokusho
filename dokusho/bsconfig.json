@@ -30,7 +30,7 @@
   "bs-dev-dependencies" : [
     "@glennsl/bs-jest",
     "bs-react-test-renderer"
-  ],  
+  ],
   "reason": {
     "react-jsx": 2
   },
