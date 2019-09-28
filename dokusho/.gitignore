@@ -26,3 +26,8 @@ yarn-debug.log*
 yarn-error.log*
 
 toolbox/
+# Generated bucklescript js
+*.bs.js
+ # Cache and runtime files
+.cache/
+dist/ 
