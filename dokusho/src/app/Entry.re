@@ -12,7 +12,7 @@ let make = (~entry: entry, _children) => {
         entry.kind
         |> PageType.toString
         |> ((str) => str ++ ": " ++ string_of_int(entry.value) 
-          |> ReasonReact.stringToElement)
+          |> ReasonReact.string)
       )
     </div>
 };

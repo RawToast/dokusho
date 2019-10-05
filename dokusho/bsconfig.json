@@ -12,6 +12,14 @@
       "type": "dev"
     }
   ],
+  "package-specs": [
+    {
+      "module": "commonjs",
+      "in-source": true
+    }
+  ],
+  "suffix": ".bs.js",
+  "namespace": true,
   "bs-dependencies": [
     "reason-react",
     "@glennsl/bs-json",
@@ -26,8 +34,5 @@
   "reason": {
     "react-jsx": 2
   },
-  "bsc-flags": [
-    "-bs-super-errors"
-  ],
   "refmt": 3
 }
