@@ -9,7 +9,7 @@ matrix:
       script: ["yarn add coveralls", "yarn bsb -clean-world -make-world", "yarn ci"]
 
     - language: scala
-      jdk: oraclejdk9
+      jdk: openjdk8
       scala: 
         - 2.12.9
       before_script:
