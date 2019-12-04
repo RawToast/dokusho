@@ -4,16 +4,18 @@ mainClass in(Compile, run) := Some("Main")
 
 val SCALA_VERSION = "2.13.1"
 
-val CIRCE_VERSION = "0.10.1"
-val HTTP4S_VERSION = "0.18.21"
-val KIND_PROJECTOR_VERSION = "0.9.8"
-val MONGO_VERSION = "2.5.0"
-val MONOCLE_VERSION = "1.5.1-cats"
+val CIRCE_VERSION = "0.12.2"
+val HTTP4S_VERSION = "0.21.0-M6"
+val KIND_PROJECTOR_VERSION = "0.11.0"
+val MONGO_VERSION = "2.7.0"
+val MONOCLE_VERSION = "2.0.0"
+
+scalaVersion := SCALA_VERSION
 
 resolvers ++= Seq(
   Resolver.sonatypeRepo("releases"),
   Resolver.sonatypeRepo("snapshots"),
-  "Bintary JCenter" at "http://jcenter.bintray.com"
+  "Bintary JCenter" at "https://jcenter.bintray.com"
 )
 
 libraryDependencies ++= Seq(
@@ -26,16 +28,14 @@ libraryDependencies ++= Seq(
   "io.circe" %% "circe-generic-extras" % CIRCE_VERSION,
   "io.circe" %% "circe-parser" % CIRCE_VERSION,
 
-  "org.mongodb.scala" %% "mongo-scala-driver" % MONGO_VERSION,
+  "org.mongodb.scala" %% "mongo-scala-drhttpiver" % MONGO_VERSION,
 
   "ch.qos.logback" % "logback-classic" % "1.2.3",
 
   "com.github.julien-truffaut" %%  "monocle-core"  % MONOCLE_VERSION,
   "com.github.julien-truffaut" %%  "monocle-macro" % MONOCLE_VERSION,
 
-  "org.spire-math"  %% "kind-projector" % KIND_PROJECTOR_VERSION,
+//  "org.spire-math"  %% "kind-projector" % KIND_PROJECTOR_VERSION,
 
   "org.scalatest" % "scalatest_2.12" % "3.0.5" % Test
 )
-
-scalacOptions ++= Seq("-Ypartial-unification")

@@ -1,16 +1,17 @@
-import cats.effect.IO
+import cats.effect._
+import cats.implicits._
 import dokusho.middleware.Auth0Middleware
 import dokusho.{MongoRepository, ReadingHistoryRouter, ReadingHistoryService}
-import fs2.StreamApp.ExitCode
-import fs2.{Stream, StreamApp}
+import org.http4s.dsl.io._
+import org.http4s.implicits._
 import org.http4s.client.Client
-import org.http4s.client.blaze.PooledHttp1Client
+import org.http4s.client.blaze.Poo
 import org.http4s.server.ServerBuilder
-import org.http4s.server.blaze.BlazeBuilder
+import org.http4s.server.blaze.BlazeServerBuilder
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-object Main extends StreamApp[IO]  {
+object Main extends IOApp  {
 
   //TODO move to .env
   lazy val mongo = new MongoRepository(
@@ -27,11 +28,14 @@ object Main extends StreamApp[IO]  {
   val authHistory = authMiddleware.authenticationMiddleware(historyService.routes)
 
 
-  override def stream(args: List[String], requestShutdown: IO[Unit]): Stream[IO, ExitCode] =
-    BlazeBuilder[IO]
+  def run(args: List[String]): IO[ExitCode] =
+    BlazeServerBuilder[IO]
       .bindHttp(8080, "0.0.0.0")
       .mountService(historyService.routes, "/noauth")
       .mountService(authHistory, "/")
       .withBanner(ServerBuilder.DefaultBanner)
       .serve
+      .compile
+      .drain
+      .as(ExitCode.Success)
 }
