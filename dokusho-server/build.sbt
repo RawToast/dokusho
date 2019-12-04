@@ -28,7 +28,7 @@ libraryDependencies ++= Seq(
   "io.circe" %% "circe-generic-extras" % CIRCE_VERSION,
   "io.circe" %% "circe-parser" % CIRCE_VERSION,
 
-  "org.mongodb.scala" %% "mongo-scala-drhttpiver" % MONGO_VERSION,
+  "org.mongodb.scala" %% "mongo-scala-driver" % MONGO_VERSION,
 
   "ch.qos.logback" % "logback-classic" % "1.2.3",
 
