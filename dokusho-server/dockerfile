@@ -1,10 +1,8 @@
-FROM hseeberger/scala-sbt:8u181_2.12.7_1.2.6
+FROM hseeberger/scala-sbt:8u222_1.3.5_2.13.1
 
 COPY build.sbt ./
 
 COPY project/build.properties ./project/
-
-RUN sbt update
 
 COPY src ./src
 

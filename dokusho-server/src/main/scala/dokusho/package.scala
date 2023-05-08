@@ -1,4 +1,4 @@
-package object dokusho {
+package object dokusho:
 
   case class UserReadingHistory(userId: String, readingHistory: ReadingHistory)
 
@@ -18,11 +18,11 @@ package object dokusho {
   case object Net extends PageType
   case object News extends PageType
 
-  object PageType {
+  object PageType:
     import io.circe.{Encoder, Decoder}
-    import io.circe.generic.extras.semiauto.{deriveEnumerationEncoder, deriveEnumerationDecoder}
+    import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
 
-    implicit def pageTypeEncoder: Encoder[PageType] = deriveEnumerationEncoder[PageType]
-    implicit def pageTypeDecoder: Decoder[PageType] = deriveEnumerationDecoder[PageType]
-  }
-}
+    given Encoder[PageType] = deriveEncoder[PageType]
+    given Decoder[PageType] = deriveDecoder[PageType]
+    // implicit def pageTypeEncoder: Encoder[PageType] = deriveEnumerationEncoder[PageType]
+    // implicit def pageTypeDecoder: Decoder[PageType] = deriveEnumerationDecoder[PageType]

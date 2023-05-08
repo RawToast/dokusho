@@ -1,41 +1,56 @@
 name := "dokusho-server"
 
-mainClass in(Compile, run) := Some("Main")
+Compile / run / mainClass := Some("Main")
 
-val SCALA_VERSION = "2.12.9"
+val Scala3Version = "3.2.2"
 
-val CIRCE_VERSION = "0.10.1"
-val HTTP4S_VERSION = "0.18.21"
-val KIND_PROJECTOR_VERSION = "0.9.8"
-val MONGO_VERSION = "2.5.0"
-val MONOCLE_VERSION = "1.5.1-cats"
+val Http4sVersion = "0.23.6"
+val LogbackVersion = "1.2.6"
+val EdoMataVersion = "0.9.0"
+val CirceVersion = "0.14.3"
+val SkunkVersion = "0.5.1"
+val MonocleVersion = "3.1.0"
+val CatsEffect = "3.4.5"
+val CatsVersion = "2.9.0"
+val Redis4CatsVersion = "1.4.0"
 
-resolvers ++= Seq(
-  Resolver.sonatypeRepo("releases"),
-  Resolver.sonatypeRepo("snapshots"),
-  "Bintary JCenter" at "http://jcenter.bintray.com"
-)
+val MunitVersion = "0.7.29"
+val MunitCatsEffectVersion = "1.0.7"
+
+resolvers ++= Resolver.sonatypeOssRepos("releases")
+resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+resolvers += "Bintary JCenter" at "https://jcenter.bintray.com"
+
+ThisBuild / scalaVersion := Scala3Version
 
 libraryDependencies ++= Seq(
-  "org.http4s" %% "http4s-dsl" % HTTP4S_VERSION,
-  "org.http4s" %% "http4s-blaze-server" % HTTP4S_VERSION,
-  "org.http4s" %% "http4s-circe" % HTTP4S_VERSION,
-  "org.http4s" %% "http4s-blaze-client" % HTTP4S_VERSION,
+  // Http4s server
+  "org.http4s" %% "http4s-ember-server" % Http4sVersion,
+  "org.http4s" %% "http4s-ember-client" % Http4sVersion,
+  "org.http4s" %% "http4s-circe" % Http4sVersion,
+  "org.http4s" %% "http4s-dsl" % Http4sVersion,
 
-  "io.circe" %% "circe-generic" % CIRCE_VERSION,
-  "io.circe" %% "circe-generic-extras" % CIRCE_VERSION,
-  "io.circe" %% "circe-parser" % CIRCE_VERSION,
+  // Database
+  "org.tpolecat" %% "skunk-core" % SkunkVersion,
 
-  "org.mongodb.scala" %% "mongo-scala-driver" % MONGO_VERSION,
+  // Circe (Json)
+  "io.circe" %% "circe-core" % CirceVersion,
+  "io.circe" %% "circe-literal" % CirceVersion,
+  "io.circe" %% "circe-generic" % CirceVersion,
+  "io.circe" %% "circe-parser" % CirceVersion,
 
-  "ch.qos.logback" % "logback-classic" % "1.2.3",
+  // Redis
+  "dev.profunktor" %% "redis4cats-streams" % Redis4CatsVersion,
 
-  "com.github.julien-truffaut" %%  "monocle-core"  % MONOCLE_VERSION,
-  "com.github.julien-truffaut" %%  "monocle-macro" % MONOCLE_VERSION,
+  // Monocle lenses
+  "dev.optics" %% "monocle-core" % MonocleVersion,
+  "dev.optics" %% "monocle-macro" % MonocleVersion,
 
-  "org.spire-math"  %% "kind-projector" % KIND_PROJECTOR_VERSION,
+  // Logging
+  "ch.qos.logback" % "logback-classic" % LogbackVersion,
+  "dev.profunktor" %% "redis4cats-log4cats" % Redis4CatsVersion,
 
-  "org.scalatest" % "scalatest_2.12" % "3.0.5" % Test
+  // Test
+  "org.scalameta" %% "munit" % MunitVersion % Test,
+  "org.typelevel" %% "munit-cats-effect-3" % MunitCatsEffectVersion % Test
 )
-
-scalacOptions ++= Seq("-Ypartial-unification")
