@@ -14,4 +14,9 @@ project/plugins/project/
 
 # Idea
 .idea/
+
+# Language server
 .bsp/
+.bloop/
+.metals/
+metals.sbt
